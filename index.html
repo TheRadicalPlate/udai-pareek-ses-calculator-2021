@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Udai Pareek Socioeconomic Status Scale (Rural) Calculator - 2021 Update</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome for Academic / Action Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#16a34a',
+              600: '#15803d',
+              700: '#166534',
+            },
+            primary: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; color: black !important; font-size: 11pt; }
+      .print-shadow-none { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+    }
+    /* Smooth transitions */
+    .transition-all-200 { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-primary-100 selection:text-primary-800">
+
+  <!-- Notification Toast Box (No alerts) -->
+  <div id="toast" class="fixed top-5 right-5 z-50 flex items-center gap-3 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-[-120%] opacity-0 pointer-events-none">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <span id="toastMsg" class="text-sm font-medium">Notification message</span>
+  </div>
+
+  <!-- Header Banner -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 backdrop-blur-md bg-white/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <div class="p-3 bg-primary-50 text-primary-700 rounded-2xl ring-1 ring-primary-100 hidden sm:flex items-center justify-center">
+          <i class="fa-solid fa-wheat-awn text-2xl"></i>
+        </div>
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+              <i class="fa-solid fa-calendar-check mr-1 text-[10px]"></i> 2021 Update
+            </span>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+              Rural Community Scale
+            </span>
+            <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-50 text-primary-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
+              <i class="fa-solid fa-fingerprint mr-1"></i> DOI: 10.5281/zenodo.24131761
+            </a>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            Udai Pareek Socioeconomic Status (SES) Scale Calculator
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+            Standardized Rural SES Assessment tool based on the 2021 revision by Majumder et al.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center gap-2 self-start md:self-auto no-print">
+        <button onclick="resetCalculator()" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
+          <i class="fa-solid fa-rotate-left text-slate-500"></i> Reset Form
+        </button>
+        <button onclick="window.print()" type="button" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
+          <i class="fa-solid fa-print text-slate-500"></i> Print Report
+        </button>
+        <a href="#howToCite" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition shadow-sm active:scale-95">
+          <i class="fa-solid fa-quote-left"></i> Cite Tool
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+    
+    <!-- Top Information Alert Banner -->
+    <div class="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
+      <div class="flex items-start gap-3">
+        <div class="text-primary-600 text-xl mt-0.5"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+          <span class="font-semibold text-slate-900">Research & Field Tool:</span> 
+          Calculates total household SES score across the 9 parameters originally established by Pareek &amp; Trivedi (1965) with updated norms synthesized for 2021 by Dr. Suranjan Majumder (JFM&amp;PC).
+        </div>
+      </div>
+      <div class="text-xs bg-white/80 backdrop-blur border border-primary-200 px-3 py-1.5 rounded-lg text-primary-800 font-medium whitespace-nowrap self-stretch md:self-auto text-center">
+        Max Raw Score: <strong class="text-primary-700">47 Points</strong>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Column: 9 Survey Parameters Input (Form) -->
+      <section class="lg:col-span-7 xl:col-span-8 space-y-6">
+        
+        <form id="sesForm" class="space-y-6">
+
+          <!-- Parameter Group: 9 Core Dimensions -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <i class="fa-solid fa-list-check text-primary-600"></i> Nine Udai Pareek SES Dimensions
+                </h2>
+                <p class="text-xs text-slate-500">Select the applicable tier for each criterion</p>
+              </div>
+              <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">9 Criteria</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <!-- 1. Caste -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="caste" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">1</span>
+                      Caste
+                    </label>
+                    <span id="badge_caste" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">1 pt</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Traditional rural caste hierarchy grouping</p>
+                </div>
+                <select id="caste" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="1" data-label="Scheduled Caste">Scheduled Caste (1)</option>
+                  <option value="2" data-label="Lower Caste">Lower Caste (2)</option>
+                  <option value="3" data-label="Artisan Caste">Artisan Caste (3)</option>
+                  <option value="4" data-label="Agriculture Caste">Agriculture Caste (4)</option>
+                  <option value="5" data-label="Prestige Class">Prestige Class (5)</option>
+                  <option value="6" data-label="Dominant Class">Dominant Class (6)</option>
+                </select>
+              </div>
+
+              <!-- 2. Occupation -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="occupation" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">2</span>
+                      Occupation
+                    </label>
+                    <span id="badge_occupation" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Primary occupation of household head</p>
+                </div>
+                <select id="occupation" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="None">None (0)</option>
+                  <option value="1" data-label="Labourer">Labourer (1)</option>
+                  <option value="2" data-label="Caste Occupation">Caste Occupation (2)</option>
+                  <option value="3" data-label="Business">Business (3)</option>
+                  <option value="4" data-label="Independent Profession">Independent Profession (4)</option>
+                  <option value="5" data-label="Cultivation">Cultivation (5)</option>
+                  <option value="6" data-label="Service">Service (6)</option>
+                </select>
+              </div>
+
+              <!-- 3. Social Participation -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="social_participation" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">3</span>
+                      Social Participation
+                    </label>
+                    <span id="badge_social_participation" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Involvement in civic/panchayat/village bodies</p>
+                </div>
+                <select id="social_participation" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="None">None (0)</option>
+                  <option value="1" data-label="Member of one organisation">Member of one organisation (1)</option>
+                  <option value="2" data-label="Member of >1 organisation">Member of more than one organisation (2)</option>
+                  <option value="3" data-label="Office holder in organisation">Office holder in such an organisation (3)</option>
+                  <option value="4" data-label="Wide public leader">Wide public leader (4)</option>
+                </select>
+              </div>
+
+              <!-- 4. House -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="house" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">4</span>
+                      House Type
+                    </label>
+                    <span id="badge_house" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Physical structure and quality of dwelling</p>
+                </div>
+                <select id="house" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="No House">No House (0)</option>
+                  <option value="1" data-label="Hut">Hut (1)</option>
+                  <option value="2" data-label="Kutcha House">Kutcha House (2)</option>
+                  <option value="3" data-label="Mixed House">Mixed House (3)</option>
+                  <option value="4" data-label="Pucca House">Pucca House (4)</option>
+                  <option value="5" data-label="Mansion">Mansion (5)</option>
+                </select>
+              </div>
+
+              <!-- 5. Farm Power -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="farm_power" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">5</span>
+                      Farm Power
+                    </label>
+                    <span id="badge_farm_power" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">1 pt</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Number of draft animals owned</p>
+                </div>
+                <select id="farm_power" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="1" data-label="No draft animals">No draft animals (1)</option>
+                  <option value="2" data-label="1-2 draft animals">1-2 draft animals (2)</option>
+                  <option value="4" data-label="3-4 draft animals">3-4 draft animals (4)</option>
+                  <option value="6" data-label="5-6 draft animals">5-6 draft animals (6)</option>
+                </select>
+              </div>
+
+              <!-- 6. Education -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="education" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">6</span>
+                      Education
+                    </label>
+                    <span id="badge_education" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Highest level attained by head of household</p>
+                </div>
+                <select id="education" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="Illiterate">Illiterate (0)</option>
+                  <option value="1" data-label="Can read only">Can read only (1)</option>
+                  <option value="2" data-label="Can read and write">Can read and write (2)</option>
+                  <option value="3" data-label="Primary">Primary (3)</option>
+                  <option value="4" data-label="Middle School">Middle School (4)</option>
+                  <option value="5" data-label="High School">High School (5)</option>
+                  <option value="6" data-label="Graduate and Above">Graduate and Above (6)</option>
+                </select>
+              </div>
+
+              <!-- 7. Land -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="land" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">7</span>
+                      Land Holding
+                    </label>
+                    <span id="badge_land" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Agricultural land owned (in acres)</p>
+                </div>
+                <select id="land" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="No land">No land (0)</option>
+                  <option value="1" data-label="< 1 acre">&lt; 1 acre (1)</option>
+                  <option value="2" data-label="1 - 5 acres">1 - 5 acres (2)</option>
+                  <option value="3" data-label="5 - 10 acres">5 - 10 acres (3)</option>
+                  <option value="4" data-label="10 - 15 acres">10 - 15 acres (4)</option>
+                  <option value="5" data-label="15 - 20 acres">15 - 20 acres (5)</option>
+                  <option value="6" data-label="> 20 acres">&gt; 20 acres (6)</option>
+                </select>
+              </div>
+
+              <!-- 8. Material Possessions -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="material" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">8</span>
+                      Material Possessions
+                    </label>
+                    <span id="badge_material" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Consumer &amp; transport asset item hierarchy</p>
+                </div>
+                <select id="material" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="0" data-label="Bullock cart">Bullock cart (0)</option>
+                  <option value="1" data-label="Bicycle">Bicycle (1)</option>
+                  <option value="2" data-label="Radio">Radio (2)</option>
+                  <option value="3" data-label="Chairs">Chairs (3)</option>
+                  <option value="4" data-label="Mobile Phone">Mobile Phone (4)</option>
+                  <option value="5" data-label="Television">Television (5)</option>
+                  <option value="6" data-label="Refrigerator">Refrigerator (6)</option>
+                </select>
+              </div>
+
+              <!-- 9. Family Members -->
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 md:col-span-2 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1.5">
+                    <label for="family_members" class="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                      <span class="w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs flex items-center justify-center font-bold">9</span>
+                      Family Members (Household Size)
+                    </label>
+                    <span id="badge_family_members" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">2 pts</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mb-2.5">Total count of dependent and cohabiting members (Smaller rural families score higher)</p>
+                </div>
+                <select id="family_members" onchange="calculateScore()" class="w-full text-sm rounded-lg border border-slate-300 bg-white px-3 py-2.5 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
+                  <option value="2" data-label="Up to 5 members">Up to 5 members (2)</option>
+                  <option value="1" data-label="> 5 members">&gt; 5 members (1)</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </section>
+
+      <!-- Right Column: Live Results Display & Summary Card -->
+      <aside class="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24">
+        
+        <!-- Score Card Card -->
+        <div class="bg-white rounded-3xl border-2 border-slate-200/80 p-6 shadow-xl relative overflow-hidden print-shadow-none">
+          <div id="resultGradient" class="absolute top-0 left-0 right-0 h-2.5 bg-gradient-to-r from-rose-500 via-amber-500 via-indigo-500 to-emerald-500"></div>
+
+          <div class="flex items-center justify-between mt-1 mb-4">
+            <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400">Computed Result</span>
+            <span id="sesClassBadge" class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide bg-rose-100 text-rose-800 border border-rose-200">
+              Lower Class
+            </span>
+          </div>
+
+          <!-- Total Score Visual -->
+          <div class="text-center py-4 bg-slate-50 rounded-2xl border border-slate-100 mb-5">
+            <span class="text-xs font-semibold text-slate-500 block mb-1">Total SES Raw Score</span>
+            <div class="flex items-baseline justify-center gap-1.5">
+              <span id="totalScoreDisplay" class="text-5xl font-black text-slate-900 tracking-tight">4</span>
+              <span class="text-slate-400 font-medium text-xl">/ 47</span>
+            </div>
+            <p id="sesClassTitle" class="text-lg font-bold text-slate-800 mt-1">Lower Class</p>
+          </div>
+
+          <!-- Score Progress Bar -->
+          <div class="space-y-1.5 mb-6">
+            <div class="flex justify-between text-xs font-semibold text-slate-600">
+              <span>Score Index (0 - 47)</span>
+              <span id="scorePercentage">8.5%</span>
+            </div>
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
+              <div id="scoreBar" class="h-full bg-rose-500 rounded-full transition-all duration-300" style="width: 8.5%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 font-medium pt-0.5">
+              <span>0 (Lower)</span>
+              <span>13</span>
+              <span>24</span>
+              <span>33</span>
+              <span>47 (Upper)</span>
+            </div>
+          </div>
+
+          <!-- Breakdown list -->
+          <div class="space-y-2.5 mb-6">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-1.5">
+              Dimension Points Breakdown
+            </h4>
+            <div class="space-y-1 text-xs text-slate-600" id="breakdownList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Actions: Copy & Print -->
+          <div class="space-y-2 no-print">
+            <button onclick="copyResultSummary()" type="button" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95">
+              <i class="fa-solid fa-copy"></i> Copy Complete Result
+            </button>
+            <button onclick="window.print()" type="button" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition active:scale-95">
+              <i class="fa-solid fa-file-pdf"></i> Export / Print Assessment
+            </button>
+          </div>
+        </div>
+
+        <!-- Reference Rubric Matrix Accordion / Table (Moved to after Computed Results) -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-table-list text-slate-500"></i> Udai Pareek 2021 Reference Classifications &amp; Cutoffs
+          </h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-semibold uppercase tracking-wider">
+                  <th class="py-2.5 px-3">Class</th>
+                  <th class="py-2.5 px-3">Rule</th>
+                  <th class="py-2.5 px-3">Score</th>
+                  <th class="py-2.5 px-3">Classification</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr id="row_upper" class="hover:bg-slate-50 transition">
+                  <td class="py-2 px-3 font-medium text-emerald-800">Class I</td>
+                  <td class="py-2 px-3">&gt; 42</td>
+                  <td class="py-2 px-3 font-semibold">43 – 47</td>
+                  <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">Upper Class</span></td>
+                </tr>
+                <tr id="row_upper_middle" class="hover:bg-slate-50 transition">
+                  <td class="py-2 px-3 font-medium text-blue-800">Class II</td>
+                  <td class="py-2 px-3">33 – 42</td>
+                  <td class="py-2 px-3 font-semibold">33 – 42</td>
+                  <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold">Upper Middle Class</span></td>
+                </tr>
+                <tr id="row_middle" class="hover:bg-slate-50 transition">
+                  <td class="py-2 px-3 font-medium text-indigo-800">Class III</td>
+                  <td class="py-2 px-3">24 – 32</td>
+                  <td class="py-2 px-3 font-semibold">24 – 32</td>
+                  <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-semibold">Middle Class</span></td>
+                </tr>
+                <tr id="row_lower_middle" class="hover:bg-slate-50 transition">
+                  <td class="py-2 px-3 font-medium text-amber-800">Class IV</td>
+                  <td class="py-2 px-3">13 – 23</td>
+                  <td class="py-2 px-3 font-semibold">13 – 23</td>
+                  <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold">Lower Middle Class</span></td>
+                </tr>
+                <tr id="row_lower" class="hover:bg-slate-50 transition">
+                  <td class="py-2 px-3 font-medium text-rose-800">Class V</td>
+                  <td class="py-2 px-3">&lt; 13</td>
+                  <td class="py-2 px-3 font-semibold">0 – 12</td>
+                  <td class="py-2 px-3"><span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-semibold">Lower Class</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2 italic">
+            *Norms revised by S. Majumder (2021) in Journal of Family Medicine and Primary Care (JFM&amp;PC).
+          </p>
+        </div>
+
+      </aside>
+
+    </div>
+
+    <!-- How to Cite & Academic Attribution Section -->
+    <section id="howToCite" class="mt-12 bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 border-b border-slate-200 pb-4">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-primary-600 flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-book-bookmark"></i> Academic Citations
+          </span>
+          <h2 class="text-xl font-extrabold text-slate-900">How to Cite This Tool &amp; Background Research</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Please cite both the software calculator and the foundational research paper in your publications.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Citation 1: The Calculator (Author: Rachael Alphonso) -->
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-laptop-code text-primary-600"></i> 1. Citing This Calculator (Software)
+              </span>
+              <span class="text-[10px] font-medium bg-primary-100 text-primary-800 px-2 py-0.5 rounded-full">Software</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Cite when using this interactive calculator for patient categorization or field study data collection:</p>
+            
+            <div id="calcCitationText" class="p-3 bg-white rounded-xl border border-slate-200 font-mono text-xs text-slate-800 leading-relaxed break-words">
+              Alphonso, R. (2026). Udai Pareek Socioeconomic Status Scale Automated Calculator (Version 2026.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24131761
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2 pt-3 border-t border-slate-200">
+            <button onclick="copyToClipboard('calcCitationText', 'Calculator citation copied!')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-white transition active:scale-95">
+              <i class="fa-regular fa-copy"></i> Copy Citation
+            </button>
+            <button onclick="copyBibtex('calc')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition active:scale-95">
+              <i class="fa-solid fa-code"></i> Copy BibTeX
+            </button>
+          </div>
+        </div>
+
+        <!-- Citation 2: The 2021 Update Paper (Author: Suranjan Majumder) -->
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-file-lines text-emerald-600"></i> 2. Citing The 2021 Update Paper
+              </span>
+              <span class="text-[10px] font-medium bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Background Paper</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Cite for the peer-reviewed 2021 scale scoring criteria and consumer price index update:</p>
+            
+            <div id="paperCitationText" class="p-3 bg-white rounded-xl border border-slate-200 font-mono text-xs text-slate-800 leading-relaxed break-words">
+              Majumder, S. (2021). Socioeconomic status scales: Revised Kuppuswamy, BG Prasad, and Udai Pareek’s scale updated for 2021. Journal of Family Medicine and Primary Care, 10(11), 3964–3967. https://doi.org/10.4103/jfmpc.jfmpc_600_21
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2 pt-3 border-t border-slate-200">
+            <button onclick="copyToClipboard('calcCitationText', 'Calculator citation copied!')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-white transition active:scale-95">
+              <i class="fa-regular fa-copy"></i> Copy Citation
+            </button>
+            <button onclick="copyBibtex('calc')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition active:scale-95">
+              <i class="fa-solid fa-code"></i> Copy BibTeX
+            </button>
+          </div>
+        </div>
+
+        <!-- Citation 2: The 2021 Update Paper (Author: Suranjan Majumder) -->
+        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-slate-700 uppercase tracking-wide flex items-center gap-1.5">
+                <i class="fa-solid fa-file-lines text-emerald-600"></i> 2. Citing The 2021 Update Paper
+              </span>
+              <span class="text-[10px] font-medium bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Background Paper</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-3">Cite for the peer-reviewed 2021 scale scoring criteria and consumer price index update:</p>
+            
+            <div id="paperCitationText" class="p-3 bg-white rounded-xl border border-slate-200 font-mono text-xs text-slate-800 leading-relaxed break-words">
+              Majumder, S. (2021). Socioeconomic status scales: Revised Kuppuswamy, BG Prasad, and Udai Pareekh’s scale updated for 2021. Journal of Family Medicine and Primary Care, 10(11), 3964–3967. https://doi.org/10.4103/jfmpc.jfmpc_600_21
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2 pt-3 border-t border-slate-200">
+            <button onclick="copyToClipboard('paperCitationText', 'Research paper citation copied!')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-900 hover:bg-slate-800 text-white transition active:scale-95">
+              <i class="fa-regular fa-copy"></i> Copy Citation
+            </button>
+            <button onclick="copyBibtex('paper')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition active:scale-95">
+              <i class="fa-solid fa-code"></i> Copy BibTeX
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Historical Reference Footer -->
+      <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-slate-500 gap-2">
+        <p>
+          <span class="font-medium text-slate-700">Original Foundation:</span> 
+          Pareek, U., &amp; Trivedi, G. (1965). Factor Analysis of Socioeconomic Status of Farmers in India. <em>Rural Sociology</em>, 30(3), 311–321.
+        </p>
+        <button onclick="copyOriginalRef()" class="text-primary-600 hover:text-primary-800 font-semibold inline-flex items-center gap-1">
+          <i class="fa-regular fa-copy"></i> Copy Pareek &amp; Trivedi (1965) Reference
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Creator & Software Metadata Card (Moved below Academic Citations) -->
+    <section class="mt-6 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm text-xs space-y-3">
+      <div class="flex items-center gap-2 font-bold text-slate-900 border-b border-slate-100 pb-3">
+        <i class="fa-solid fa-shield-halved text-primary-600"></i>
+        <span class="text-sm">Software &amp; Digital Tool Attribution</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-slate-600 pt-1">
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="font-semibold text-slate-800 block text-xs">Calculator Developer</span>
+          <span class="text-slate-900 font-medium">Rachael Alphonso</span>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="font-semibold text-slate-800 block text-xs">Software Version</span>
+          <span class="text-slate-900 font-medium">Version 2026.1</span>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="font-semibold text-slate-800 block text-xs">Permanent Identifier (Zenodo DOI)</span>
+          <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:underline font-mono font-medium">
+            10.5281/zenodo.24131761
+          </a>
+        </div>
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="font-semibold text-slate-800 block text-xs">Data Architecture &amp; Licensing</span>
+          <span class="text-slate-900 font-medium">100% Client-Side &bull; CC-BY 4.0</span>
+        </div>
+      </div>
+      <div class="pt-2 flex items-center justify-between text-slate-500">
+        <span>Hosted &amp; archived under Zenodo Research Data Repository</span>
+        <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-semibold text-primary-600 hover:text-primary-800">
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Open in Zenodo
+        </a>
+      </div>
+    </section>
+
+    <!-- Data Privacy & Client-Side Notice (Moved below Software Attribution) -->
+    <section class="mt-4 bg-emerald-50/80 border border-emerald-200 rounded-3xl p-4 sm:p-5 flex items-start gap-3.5 shadow-sm">
+      <div class="text-emerald-700 text-lg mt-0.5 shrink-0">
+        <i class="fa-solid fa-shield-check"></i>
+      </div>
+      <div class="text-xs sm:text-sm text-emerald-900 leading-relaxed">
+        <span class="font-bold text-emerald-950">Data Privacy &amp; Security: Client-Side Only.</span>
+        None of the data or responses selected in this calculator are stored, tracked, transmitted, or logged in any way. Calculations execute 100% locally in your browser.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="mt-12 bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>
+        Udai Pareek Socioeconomic Status Scale (Rural) Calculator &bull; Version 2026.1 &bull; Created by <strong>Rachael Alphonso</strong>
+      </p>
+      <p class="text-[11px] text-slate-400">
+        100% Client-Side Execution &bull; No cookies, trackers, or data retention &bull; Open-source for rural health research
+      </p>
+    </div>
+  </footer>
+
+  <!-- Core JavaScript Logic -->
+  <script>
+    // Scale items list with labels and selectors
+    const DIMENSIONS = [
+      { id: 'caste', name: 'Caste' },
+      { id: 'occupation', name: 'Occupation' },
+      { id: 'social_participation', name: 'Social Participation' },
+      { id: 'house', name: 'House' },
+      { id: 'farm_power', name: 'Farm Power' },
+      { id: 'education', name: 'Education' },
+      { id: 'land', name: 'Land' },
+      { id: 'material', name: 'Material Possessions' },
+      { id: 'family_members', name: 'Family Members' }
+    ];
+
+    // Notification toast function
+    function showToast(message, isSuccess = true) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toastMsg');
+      const icon = document.getElementById('toastIcon');
+
+      msg.textContent = message;
+      if (isSuccess) {
+        icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+      } else {
+        icon.className = 'fa-solid fa-circle-exclamation text-amber-400 text-lg';
+      }
+
+      toast.classList.remove('translate-y-[-120%]', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-[-120%]', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3200);
+    }
+
+    // Text copy helper
+    function copyText(str, successMessage) {
+      const el = document.createElement('textarea');
+      el.value = str;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMessage);
+      } catch (err) {
+        showToast('Failed to copy to clipboard', false);
+      }
+      document.body.removeChild(el);
+    }
+
+    function copyToClipboard(elementId, msg) {
+      const text = document.getElementById(elementId).innerText.trim();
+      copyText(text, msg);
+    }
+
+    function copyBibtex(type) {
+      let bib = '';
+      if (type === 'calc') {
+        bib = `@software{alphonso2026udaipareek,
+  author       = {Alphonso, Rachael},
+  title        = {Udai Pareek Socioeconomic Status Scale Automated Calculator},
+  version      = {2026.1},
+  year         = {2026},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.24131761},
+  url          = {https://doi.org/10.5281/zenodo.24131761}
+}`;
+        copyText(bib, 'Calculator BibTeX entry copied!');
+      } else if (type === 'paper') {
+        bib = `@article{majumder2021socioeconomic,
+  title        = {Socioeconomic status scales: Revised Kuppuswamy, BG Prasad, and Udai Pareek's scale updated for 2021},
+  author       = {Majumder, Suranjan},
+  journal      = {Journal of Family Medicine and Primary Care},
+  volume       = {10},
+  number       = {11},
+  pages        = {3964--3967},
+  year         = {2021},
+  publisher    = {Wolters Kluwer},
+  doi          = {10.4103/jfmpc.jfmpc_600_21}
+}`;
+        copyText(bib, 'Paper BibTeX entry copied!');
+      }
+    }
+
+    function copyOriginalRef() {
+      const ref = 'Pareek, U., & Trivedi, G. (1965). Factor Analysis of Socioeconomic Status of Farmers in India. Rural Sociology, 30(3), 311–321.';
+      copyText(ref, 'Original 1965 Pareek & Trivedi reference copied!');
+    }
+
+    // Live calculation routine
+    function calculateScore() {
+      let total = 0;
+      const breakdown = [];
+
+      DIMENSIONS.forEach(dim => {
+        const select = document.getElementById(dim.id);
+        const score = parseInt(select.value, 10) || 0;
+        total += score;
+
+        const selectedOption = select.options[select.selectedIndex];
+        const labelText = selectedOption.getAttribute('data-label') || selectedOption.text;
+
+        // Update individual input badge
+        const badge = document.getElementById('badge_' + dim.id);
+        if (badge) {
+          badge.textContent = score + (score === 1 ? ' pt' : ' pts');
+        }
+
+        breakdown.push({
+          dimName: dim.name,
+          choice: labelText,
+          score: score
+        });
+      });
+
+      // Update total raw score display
+      const totalDisplay = document.getElementById('totalScoreDisplay');
+      totalDisplay.textContent = total;
+
+      // Calculate percentage (total / 47)
+      const percentage = Math.min(100, Math.max(0, (total / 47) * 100)).toFixed(1);
+      document.getElementById('scorePercentage').textContent = percentage + '%';
+
+      const scoreBar = document.getElementById('scoreBar');
+      scoreBar.style.width = percentage + '%';
+
+      // Determine SES classification according to 2021 update
+      // Upper: >42 (43-47)
+      // Upper Middle: 33-42
+      // Middle: 24-32
+      // Lower Middle: 13-23
+      // Lower: <13 (0-12)
+      let classification = '';
+      let badgeClass = '';
+      let barClass = '';
+      let activeRowId = '';
+
+      if (total > 42) {
+        classification = 'Upper Class (Class I)';
+        badgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+        barClass = 'bg-emerald-500';
+        activeRowId = 'row_upper';
+      } else if (total >= 33) {
+        classification = 'Upper Middle Class (Class II)';
+        badgeClass = 'bg-blue-100 text-blue-800 border-blue-300';
+        barClass = 'bg-blue-600';
+        activeRowId = 'row_upper_middle';
+      } else if (total >= 24) {
+        classification = 'Middle Class (Class III)';
+        badgeClass = 'bg-indigo-100 text-indigo-800 border-indigo-300';
+        barClass = 'bg-indigo-600';
+        activeRowId = 'row_middle';
+      } else if (total >= 13) {
+        classification = 'Lower Middle Class (Class IV)';
+        badgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
+        barClass = 'bg-amber-500';
+        activeRowId = 'row_lower_middle';
+      } else {
+        classification = 'Lower Class (Class V)';
+        badgeClass = 'bg-rose-100 text-rose-800 border-rose-300';
+        barClass = 'bg-rose-500';
+        activeRowId = 'row_lower';
+      }
+
+      // Update Result Elements
+      const classTitle = document.getElementById('sesClassTitle');
+      const classBadge = document.getElementById('sesClassBadge');
+      classTitle.textContent = classification;
+      classBadge.textContent = classification;
+      classBadge.className = 'text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide border ' + badgeClass;
+
+      scoreBar.className = 'h-full rounded-full transition-all duration-300 ' + barClass;
+
+      // Update Breakdown Table / Chips
+      const breakdownContainer = document.getElementById('breakdownList');
+      breakdownContainer.innerHTML = '';
+      breakdown.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex justify-between items-center py-1 border-b border-slate-100 last:border-b-0';
+        row.innerHTML = `
+          <span class="text-slate-600 truncate max-w-[210px]"><span class="font-medium text-slate-800">${item.dimName}:</span> ${item.choice}</span>
+          <span class="font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">${item.score} pt${item.score !== 1 ? 's' : ''}</span>
+        `;
+        breakdownContainer.appendChild(row);
+      });
+
+      // Highlight corresponding row in reference table
+      const rows = ['row_upper', 'row_upper_middle', 'row_middle', 'row_lower_middle', 'row_lower'];
+      rows.forEach(r => {
+        const el = document.getElementById(r);
+        if (r === activeRowId) {
+          el.className = 'bg-primary-50/80 font-bold border-l-4 border-primary-600 transition';
+        } else {
+          el.className = 'hover:bg-slate-50 transition border-l-4 border-transparent';
+        }
+      });
+    }
+
+    // Reset Calculator to Default
+    function resetCalculator() {
+      document.getElementById('sesForm').reset();
+      calculateScore();
+      showToast('Calculator fields reset to default values.');
+    }
+
+    // Copy Result Summary
+    function copyResultSummary() {
+      const totalScore = document.getElementById('totalScoreDisplay').textContent;
+      const sesClass = document.getElementById('sesClassTitle').textContent;
+      const timestamp = new Date().toLocaleDateString();
+
+      let summary = `UDAI PAREEK SES ASSESSMENT REPORT (2021 Update)
+--------------------------------------------------
+Assessment Date: ${timestamp}
+Total Raw Score: ${totalScore} / 47
+Socioeconomic Classification: ${sesClass}
+--------------------------------------------------
+Dimension Breakdown:
+`;
+
+      DIMENSIONS.forEach(dim => {
+        const select = document.getElementById(dim.id);
+        const score = select.value;
+        const opt = select.options[select.selectedIndex];
+        summary += `- ${dim.name}: ${opt.text} (${score} pts)\n`;
+      });
+
+      summary += `--------------------------------------------------
+Tool: Udai Pareek SES Calculator (Version 2026.1)
+Creator: Rachael Alphonso (Zenodo: https://doi.org/10.5281/zenodo.24131761)
+Scale Reference: Majumder S. J Family Med Prim Care 2021;10(11):3964-7. DOI: 10.4103/jfmpc.jfmpc_600_21`;
+
+      copyText(summary, 'Assessment result copied to clipboard!');
+    }
+
+    // Initialize on page load
+    window.onload = function () {
+      calculateScore();
+    };
+  </script>
+</body>
+</html>
