@@ -1,0 +1,15 @@
+# Operating System temporary files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office / Excel temporary and lock files
+~$*.xlsx
+~$*.xls
+*.tmp
+
+# Editor directories and caches
+.vscode/
+.idea/
+*.swp
+*~
