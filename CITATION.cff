@@ -8,7 +8,7 @@ version: 2026.1
 doi: 10.5281/zenodo.24131761
 date-released: 2026-01-01
 url: "https://doi.org/10.5281/zenodo.24131761"
-license: "CC-BY-4.0"
+license: "MIT"
 keywords:
   - "socioeconomic status"
   - "Udai Pareek scale"
