@@ -403,7 +403,7 @@
             <h4 id="breakdown_heading" class="text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-1">
               Dimension Points Breakdown
             </h4>
-            <div class="space-y-1 text-xs text-slate-600 max-h-48 overflow-y-auto pr-1" id="breakdownList">
+            <div class="space-y-1 text-xs text-slate-600" id="breakdownList">
               <!-- Rendered via JS -->
             </div>
           </div>
@@ -839,86 +839,86 @@
           occupation: {
             name: 'व्यवसाय (Occupation)', desc: 'परिवार के मुखिया का मुख्य व्यवसाय',
             opts: [
-              { val: '0', label: 'कोई नहीं' },
+              { val: '0', label: 'कोई नहीं (None)' },
               { val: '1', label: 'मजदूर (Labourer)' },
-              { val: '2', label: 'जातिगत व्यवसाय' },
+              { val: '2', label: 'जातिगत व्यवसाय (Caste Occupation)' },
               { val: '3', label: 'व्यापार (Business)' },
-              { val: '4', label: 'स्वतंत्र पेशा' },
+              { val: '4', label: 'स्वतंत्र पेशा (Independent Profession)' },
               { val: '5', label: 'खेती (Cultivation)' },
               { val: '6', label: 'नौकरी / सेवा (Service)' }
             ]
           },
           social_participation: {
-            name: 'सामाजिक सहभागिता', desc: 'ग्राम या नागरिक संस्थाओं में भागीदारी',
+            name: 'सामाजिक सहभागिता (Social Participation)', desc: 'ग्राम या नागरिक संस्थाओं में भागीदारी',
             opts: [
-              { val: '0', label: 'कोई नहीं' },
-              { val: '1', label: 'एक संगठन का सदस्य' },
-              { val: '2', label: 'एक से अधिक संगठनों का सदस्य' },
-              { val: '3', label: 'किसी संगठन में पदाधिकारी' },
-              { val: '4', label: 'व्यापक सार्वजनिक नेता' }
+              { val: '0', label: 'कोई नहीं (None)' },
+              { val: '1', label: 'एक संगठन का सदस्य (Member of one organisation)' },
+              { val: '2', label: 'एक से अधिक संगठनों का सदस्य (Member of more than one organisation)' },
+              { val: '3', label: 'किसी संगठन में पदाधिकारी (Office holder in such an organisation)' },
+              { val: '4', label: 'व्यापक सार्वजनिक नेता (Wide public leader)' }
             ]
           },
           house: {
-            name: 'मकान का प्रकार', desc: 'निवास स्थान की भौतिक संरचना',
+            name: 'मकान का प्रकार (House Type)', desc: 'निवास स्थान की भौतिक संरचना',
             opts: [
-              { val: '0', label: 'मकान नहीं' },
+              { val: '0', label: 'मकान नहीं (No House)' },
               { val: '1', label: 'झोपड़ी (Hut)' },
-              { val: '2', label: 'कच्चा मकान' },
-              { val: '3', label: 'मिश्रित मकान' },
-              { val: '4', label: 'पक्का मकान' },
+              { val: '2', label: 'कच्चा मकान (Kutcha House)' },
+              { val: '3', label: 'मिश्रित मकान (Mixed House)' },
+              { val: '4', label: 'पक्का मकान (Pucca House)' },
               { val: '5', label: 'हवेली / कोठी (Mansion)' }
             ]
           },
           farm_power: {
             name: 'कृषि शक्ति (Farm Power)', desc: 'स्वामित्व वाले भारवाही पशु (बैल आदि)',
             opts: [
-              { val: '1', label: 'कोई भारवाही पशु नहीं' },
-              { val: '2', label: '1-2 भारवाही पशु' },
-              { val: '4', label: '3-4 भारवाही पशु' },
-              { val: '6', label: '5-6 भारवाही पशु' }
+              { val: '1', label: 'कोई भारवाही पशु नहीं (No draft animals)' },
+              { val: '2', label: '1-2 भारवाही पशु (1-2 draft animals)' },
+              { val: '4', label: '3-4 भारवाही पशु (3-4 draft animals)' },
+              { val: '6', label: '5-6 भारवाही पशु (5-6 draft animals)' }
             ]
           },
           education: {
             name: 'शिक्षा (Education)', desc: 'परिवार के मुखिया की उच्चतम शिक्षा',
             opts: [
               { val: '0', label: 'निरक्षर (Illiterate)' },
-              { val: '1', label: 'केवल पढ़ सकते हैं' },
-              { val: '2', label: 'पढ़ और लिख सकते हैं' },
+              { val: '1', label: 'केवल पढ़ सकते हैं (Can read only)' },
+              { val: '2', label: 'पढ़ और लिख सकते हैं (Can read and write)' },
               { val: '3', label: 'प्राथमिक (Primary)' },
-              { val: '4', label: 'मिडिल स्कूल (8वीं तक)' },
-              { val: '5', label: 'हाई स्कूल (10वीं / 12वीं)' },
-              { val: '6', label: 'स्नातक और उससे ऊपर' }
+              { val: '4', label: 'मिडिल स्कूल (Middle School)' },
+              { val: '5', label: 'हाई स्कूल (High School)' },
+              { val: '6', label: 'स्नातक और उससे ऊपर (Graduate and Above)' }
             ]
           },
           land: {
-            name: 'भूमि स्वामित्व', desc: 'कृषि भूमि का स्वामित्व (एकड़ में)',
+            name: 'भूमि स्वामित्व (Land Holding)', desc: 'कृषि भूमि का स्वामित्व (एकड़ में)',
             opts: [
-              { val: '0', label: 'कोई भूमि नहीं' },
-              { val: '1', label: '< 1 एकड़' },
-              { val: '2', label: '1 - 5 एकड़' },
-              { val: '3', label: '5 - 10 एकड़' },
-              { val: '4', label: '10 - 15 एकड़' },
-              { val: '5', label: '15 - 20 एकड़' },
-              { val: '6', label: '> 20 एकड़' }
+              { val: '0', label: 'कोई भूमि नहीं (No land)' },
+              { val: '1', label: '< 1 एकड़ (< 1 acre)' },
+              { val: '2', label: '1 - 5 एकड़ (1 - 5 acres)' },
+              { val: '3', label: '5 - 10 एकड़ (5 - 10 acres)' },
+              { val: '4', label: '10 - 15 एकड़ (10 - 15 acres)' },
+              { val: '5', label: '15 - 20 एकड़ (15 - 20 acres)' },
+              { val: '6', label: '> 20 एकड़ (> 20 acres)' }
             ]
           },
           material: {
-            name: 'भौतिक संपत्ति', desc: 'उपभोक्ता / परिवहन संपत्ति श्रेणी',
+            name: 'भौतिक संपत्ति (Material Possessions)', desc: 'उपभोक्ता / परिवहन संपत्ति श्रेणी',
             opts: [
-              { val: '0', label: 'बैलगाड़ी' },
-              { val: '1', label: 'साइकिल' },
-              { val: '2', label: 'रेडियो' },
-              { val: '3', label: 'कुर्सियां' },
-              { val: '4', label: 'मोबाइल फोन' },
-              { val: '5', label: 'टेलीविजन' },
-              { val: '6', label: 'रेफ्रिजरेटर (फ्रिज)' }
+              { val: '0', label: 'बैलगाड़ी (Bullock cart)' },
+              { val: '1', label: 'साइकिल (Bicycle)' },
+              { val: '2', label: 'रेडियो (Radio)' },
+              { val: '3', label: 'कुर्सियां (Chairs)' },
+              { val: '4', label: 'मोबाइल फोन (Mobile Phone)' },
+              { val: '5', label: 'टेलीविजन (Television)' },
+              { val: '6', label: 'रेफ्रिजरेटर / फ्रिज (Refrigerator)' }
             ]
           },
           family_members: {
-            name: 'परिवार के सदस्य', desc: 'साथ रहने वाले आश्रित सदस्य (छोटे ग्रामीण परिवारों को अधिक अंक मिलते हैं)',
+            name: 'परिवार के सदस्य (Family Members)', desc: 'साथ रहने वाले आश्रित सदस्य (छोटे ग्रामीण परिवारों को अधिक अंक मिलते हैं)',
             opts: [
-              { val: '2', label: '5 सदस्यों तक' },
-              { val: '1', label: '5 से अधिक सदस्य' }
+              { val: '2', label: '5 सदस्यों तक (Up to 5 members)' },
+              { val: '1', label: '5 से अधिक सदस्य (> 5 members)' }
             ]
           }
         }
@@ -985,29 +985,29 @@
           occupation: {
             name: 'தொழில் (Occupation)', desc: 'குடும்பத் தலைவரின் முதன்மைத் தொழில்',
             opts: [
-              { val: '0', label: 'ஏதுமில்லை' },
-              { val: '1', label: 'கூலித் தொழிலாளி' },
-              { val: '2', label: 'குலத் தொழில்' },
-              { val: '3', label: 'வணிகம் / வியாபாரம்' },
-              { val: '4', label: 'சுயதொழில் / நிபுணர்' },
+              { val: '0', label: 'ஏதுமில்லை (None)' },
+              { val: '1', label: 'கூலித் தொழிலாளி (Labourer)' },
+              { val: '2', label: 'குலத் தொழில் (Caste Occupation)' },
+              { val: '3', label: 'வணிகம் / வியாபாரம் (Business)' },
+              { val: '4', label: 'சுயதொழில் / நிபுணர் (Independent Profession)' },
               { val: '5', label: 'விவசாயம் (Cultivation)' },
               { val: '6', label: 'அரசு / தனியார் பணி (Service)' }
             ]
           },
           social_participation: {
-            name: 'சமூகப் பங்கேற்பு', desc: 'கிராம அல்லது பொது அமைப்புகளில் பங்கேற்பு',
+            name: 'சமூகப் பங்கேற்பு (Social Participation)', desc: 'கிராம அல்லது பொது அமைப்புகளில் பங்கேற்பு',
             opts: [
-              { val: '0', label: 'ஏதுமில்லை' },
-              { val: '1', label: 'ஒரு அமைப்பில் உறுப்பினர்' },
-              { val: '2', label: 'ஒன்றுக்கு மேற்பட்ட அமைப்புகளில் உறுப்பினர்' },
-              { val: '3', label: 'அமைப்பில் நிர்வாகப் பொறுப்பாளர்' },
-              { val: '4', label: 'பரந்த பொதுத் தலைவர்' }
+              { val: '0', label: 'ஏதுமில்லை (None)' },
+              { val: '1', label: 'ஒரு அமைப்பில் உறுப்பினர் (Member of one organisation)' },
+              { val: '2', label: 'ஒன்றுக்கு மேற்பட்ட அமைப்புகளில் உறுப்பினர் (Member of more than one organisation)' },
+              { val: '3', label: 'அமைப்பில் நிர்வாகப் பொறுப்பாளர் (Office holder in such an organisation)' },
+              { val: '4', label: 'பரந்த பொதுத் தலைவர் (Wide public leader)' }
             ]
           },
           house: {
-            name: 'வீட்டின் வகை', desc: 'வசிப்பிடத்தின் கட்டுமான அமைப்பு',
+            name: 'வீட்டின் வகை (House Type)', desc: 'வசிப்பிடத்தின் கட்டுமான அமைப்பு',
             opts: [
-              { val: '0', label: 'வீடு இல்லை' },
+              { val: '0', label: 'வீடு இல்லை (No House)' },
               { val: '1', label: 'குடிசை (Hut)' },
               { val: '2', label: 'மண் வீடு (Kutcha House)' },
               { val: '3', label: 'கலப்பு வீடு (Mixed House)' },
@@ -1016,55 +1016,55 @@
             ]
           },
           farm_power: {
-            name: 'பண்ணை ஆற்றல்', desc: 'உழவு / இழுவை கால்நடைகள்',
+            name: 'பண்ணை ஆற்றல் (Farm Power)', desc: 'உழவு / இழுவை கால்நடைகள்',
             opts: [
-              { val: '1', label: 'இழுவை விலங்குகள் இல்லை' },
-              { val: '2', label: '1-2 இழுவை விலங்குகள்' },
-              { val: '4', label: '3-4 இழுவை விலங்குகள்' },
-              { val: '6', label: '5-6 இழுவை விலங்குகள்' }
+              { val: '1', label: 'இழுவை விலங்குகள் இல்லை (No draft animals)' },
+              { val: '2', label: '1-2 இழுவை விலங்குகள் (1-2 draft animals)' },
+              { val: '4', label: '3-4 இழுவை விலங்குகள் (3-4 draft animals)' },
+              { val: '6', label: '5-6 இழுவை விலங்குகள் (5-6 draft animals)' }
             ]
           },
           education: {
             name: 'கல்வி (Education)', desc: 'குடும்பத் தலைவரின் உயர்ந்த கல்வித் தகுதி',
             opts: [
-              { val: '0', label: 'எழுத்தறிவற்றவர்' },
-              { val: '1', label: 'படிக்க மட்டும் தெரியும்' },
-              { val: '2', label: 'படிக்கவும் எழுதவும் தெரியும்' },
+              { val: '0', label: 'எழுத்தறிவற்றவர் (Illiterate)' },
+              { val: '1', label: 'படிக்க மட்டும் தெரியும் (Can read only)' },
+              { val: '2', label: 'படிக்கவும் எழுதவும் தெரியும் (Can read and write)' },
               { val: '3', label: 'ஆரம்பக் கல்வி (Primary)' },
-              { val: '4', label: 'நடுநிலைப் பள்ளி' },
-              { val: '5', label: 'உயர்நிலைப் பள்ளி' },
-              { val: '6', label: 'பட்டதாரி மற்றும் அதற்கு மேல்' }
+              { val: '4', label: 'நடுநிலைப் பள்ளி (Middle School)' },
+              { val: '5', label: 'உயர்நிலைப் பள்ளி (High School)' },
+              { val: '6', label: 'பட்டதாரி மற்றும் அதற்கு மேல் (Graduate and Above)' }
             ]
           },
           land: {
-            name: 'நில உடைமை', desc: 'விவசாய நிலம் (ஏக்கரில்)',
+            name: 'நில உடைமை (Land Holding)', desc: 'விவசாய நிலம் (ஏக்கரில்)',
             opts: [
-              { val: '0', label: 'நிலம் இல்லை' },
-              { val: '1', label: '< 1 ஏக்கர்' },
-              { val: '2', label: '1 - 5 ஏக்கர்' },
-              { val: '3', label: '5 - 10 ஏக்கர்' },
-              { val: '4', label: '10 - 15 ஏக்கர்' },
-              { val: '5', label: '15 - 20 ஏக்கர்' },
-              { val: '6', label: '> 20 ஏக்கர்' }
+              { val: '0', label: 'நிலம் இல்லை (No land)' },
+              { val: '1', label: '< 1 ஏக்கர் (< 1 acre)' },
+              { val: '2', label: '1 - 5 ஏக்கர் (1 - 5 acres)' },
+              { val: '3', label: '5 - 10 ஏக்கர் (5 - 10 acres)' },
+              { val: '4', label: '10 - 15 ஏக்கர் (10 - 15 acres)' },
+              { val: '5', label: '15 - 20 ஏக்கர் (15 - 20 acres)' },
+              { val: '6', label: '> 20 ஏக்கர் (> 20 acres)' }
             ]
           },
           material: {
-            name: 'பொருள் உடைமைகள்', desc: 'வீட்டு உபயோக / போக்குவரத்து பொருட்கள்',
+            name: 'பொருள் உடைமைகள் (Material Possessions)', desc: 'வீட்டு உபயோக / போக்குவரத்து பொருட்கள்',
             opts: [
-              { val: '0', label: 'மாட்டு வண்டி' },
-              { val: '1', label: 'மிதிவண்டி (சைக்கிள்)' },
-              { val: '2', label: 'வானொலி (ரேடியோ)' },
-              { val: '3', label: 'நாற்காலிகள்' },
-              { val: '4', label: 'கைபேசி (மொபைல் போன்)' },
-              { val: '5', label: 'தொலைக்காட்சி (டிவி)' },
-              { val: '6', label: 'குளிர்பதனப் பெட்டி (ஃபிரிட்ஜ்)' }
+              { val: '0', label: 'மாட்டு வண்டி (Bullock cart)' },
+              { val: '1', label: 'மிதிவண்டி / சைக்கிள் (Bicycle)' },
+              { val: '2', label: 'வானொலி / ரேடியோ (Radio)' },
+              { val: '3', label: 'நாற்காலிகள் (Chairs)' },
+              { val: '4', label: 'கைபேசி / மொபைல் போன் (Mobile Phone)' },
+              { val: '5', label: 'தொலைக்காட்சி / டிவி (Television)' },
+              { val: '6', label: 'குளிர்பதனப் பெட்டி / ஃபிரிட்ஜ் (Refrigerator)' }
             ]
           },
           family_members: {
-            name: 'குடும்ப உறுப்பினர்கள்', desc: 'உடன் வசிக்கும் உறுப்பினர்கள் (சிறிய கிராமப்புற குடும்பங்களுக்கு அதிக மதிப்பெண்)',
+            name: 'குடும்ப உறுப்பினர்கள் (Family Members)', desc: 'உடன் வசிக்கும் உறுப்பினர்கள் (சிறிய கிராமப்புற குடும்பங்களுக்கு அதிக மதிப்பெண்)',
             opts: [
-              { val: '2', label: '5 உறுப்பினர்கள் வரை' },
-              { val: '1', label: '5 உறுப்பினர்களுக்கு மேல்' }
+              { val: '2', label: '5 உறுப்பினர்கள் வரை (Up to 5 members)' },
+              { val: '1', label: '5 உறுப்பினர்களுக்கு மேல் (> 5 members)' }
             ]
           }
         }
@@ -1131,86 +1131,86 @@
           occupation: {
             name: 'व्यवसाय (Occupation)', desc: 'कुटुंब प्रमुखाचा मुख्य व्यवसाय',
             opts: [
-              { val: '0', label: 'काहीही नाही' },
+              { val: '0', label: 'काहीही नाही (None)' },
               { val: '1', label: 'मजूर (Labourer)' },
-              { val: '2', label: 'पारंपारिक / जातीय व्यवसाय' },
+              { val: '2', label: 'पारंपारिक / जातीय व्यवसाय (Caste Occupation)' },
               { val: '3', label: 'व्यापार (Business)' },
-              { val: '4', label: 'स्वतंत्र व्यवसाय' },
+              { val: '4', label: 'स्वतंत्र व्यवसाय (Independent Profession)' },
               { val: '5', label: 'शेती (Cultivation)' },
               { val: '6', label: 'नोकरी / सेवा (Service)' }
             ]
           },
           social_participation: {
-            name: 'सामाजिक सहभाग', desc: 'ग्राम किंवा नागरी संस्थांमधील सहभाग',
+            name: 'सामाजिक सहभाग (Social Participation)', desc: 'ग्राम किंवा नागरी संस्थांमधील सहभाग',
             opts: [
-              { val: '0', label: 'काहीही नाही' },
-              { val: '1', label: 'एका संस्थेचा सदस्य' },
-              { val: '2', label: 'एकापेक्षा जास्त संस्थांचा सदस्य' },
-              { val: '3', label: 'अशा संस्थेत पदाधिकारी' },
-              { val: '4', label: 'व्यापक सार्वजनिक नेता' }
+              { val: '0', label: 'काहीही नाही (None)' },
+              { val: '1', label: 'एका संस्थेचा सदस्य (Member of one organisation)' },
+              { val: '2', label: 'एकापेक्षा जास्त संस्थांचा सदस्य (Member of more than one organisation)' },
+              { val: '3', label: 'अशा संस्थेत पदाधिकारी (Office holder in such an organisation)' },
+              { val: '4', label: 'व्यापक सार्वजनिक नेता (Wide public leader)' }
             ]
           },
           house: {
-            name: 'घराचा प्रकार', desc: 'निवासस्थानाची भौतिक रचना',
+            name: 'घराचा प्रकार (House Type)', desc: 'निवासस्थानाची भौतिक रचना',
             opts: [
-              { val: '0', label: 'घर नाही' },
+              { val: '0', label: 'घर नाही (No House)' },
               { val: '1', label: 'झोपडी (Hut)' },
-              { val: '2', label: 'कच्चे घर' },
-              { val: '3', label: 'मिश्र घर' },
-              { val: '4', label: 'पक्के घर' },
+              { val: '2', label: 'कच्चे घर (Kutcha House)' },
+              { val: '3', label: 'मिश्र घर (Mixed House)' },
+              { val: '4', label: 'पक्के घर (Pucca House)' },
               { val: '5', label: 'वाडा / बंगला (Mansion)' }
             ]
           },
           farm_power: {
             name: 'शेती शक्ती (Farm Power)', desc: 'मालकीचे ओढकाम करणारे पशुधन (बैल इ.)',
             opts: [
-              { val: '1', label: 'ओढकाम करणारे प्राणी नाहीत' },
-              { val: '2', label: '1-2 ओढकाम करणारे प्राणी' },
-              { val: '4', label: '3-4 ओढकाम करणारे प्राणी' },
-              { val: '6', label: '5-6 ओढकाम करणारे प्राणी' }
+              { val: '1', label: 'ओढकाम करणारे प्राणी नाहीत (No draft animals)' },
+              { val: '2', label: '1-2 ओढकाम करणारे प्राणी (1-2 draft animals)' },
+              { val: '4', label: '3-4 ओढकाम करणारे प्राणी (3-4 draft animals)' },
+              { val: '6', label: '5-6 ओढकाम करणारे प्राणी (5-6 draft animals)' }
             ]
           },
           education: {
             name: 'शिक्षण (Education)', desc: 'कुटुंब प्रमुखाचे सर्वोच्च शिक्षण',
             opts: [
               { val: '0', label: 'निरक्षर (Illiterate)' },
-              { val: '1', label: 'फक्त वाचता येते' },
-              { val: '2', label: 'वाचता आणि लिहिता येते' },
+              { val: '1', label: 'फक्त वाचता येते (Can read only)' },
+              { val: '2', label: 'वाचता आणि लिहिता येते (Can read and write)' },
               { val: '3', label: 'प्राथमिक (Primary)' },
               { val: '4', label: 'माध्यमिक शाळा (Middle School)' },
               { val: '5', label: 'हायस्कूल (High School)' },
-              { val: '6', label: 'पदवीधर आणि त्यापुढील' }
+              { val: '6', label: 'पदवीधर आणि त्यापुढील (Graduate and Above)' }
             ]
           },
           land: {
-            name: 'जमीन मालकी', desc: 'शेतजमीन मालकी (एकरमध्ये)',
+            name: 'जमीन मालकी (Land Holding)', desc: 'शेतजमीन मालकी (एकरमध्ये)',
             opts: [
-              { val: '0', label: 'जमीन नाही' },
-              { val: '1', label: '< 1 एकर' },
-              { val: '2', label: '1 - 5 एकर' },
-              { val: '3', label: '5 - 10 एकर' },
-              { val: '4', label: '10 - 15 एकर' },
-              { val: '5', label: '15 - 20 एकर' },
-              { val: '6', label: '> 20 एकर' }
+              { val: '0', label: 'जमीन नाही (No land)' },
+              { val: '1', label: '< 1 एकर (< 1 acre)' },
+              { val: '2', label: '1 - 5 एकर (1 - 5 acres)' },
+              { val: '3', label: '5 - 10 एकर (5 - 10 acres)' },
+              { val: '4', label: '10 - 15 एकर (10 - 15 acres)' },
+              { val: '5', label: '15 - 20 एकर (15 - 20 acres)' },
+              { val: '6', label: '> 20 एकर (> 20 acres)' }
             ]
           },
           material: {
-            name: 'भौतिक मालमत्ता', desc: 'ग्राहकोपयोगी / वाहतूक साधने',
+            name: 'भौतिक मालमत्ता (Material Possessions)', desc: 'ग्राहकोपयोगी / वाहतूक साधने',
             opts: [
-              { val: '0', label: 'बैलगाडी' },
-              { val: '1', label: 'सायकल' },
-              { val: '2', label: 'रेडिओ' },
-              { val: '3', label: 'खुर्च्या' },
-              { val: '4', label: 'मोबाईल फोन' },
-              { val: '5', label: 'टेलिव्हिजन (टीव्ही)' },
-              { val: '6', label: 'रेफ्रिजरेटर (फ्रिज)' }
+              { val: '0', label: 'बैलगाडी (Bullock cart)' },
+              { val: '1', label: 'सायकल (Bicycle)' },
+              { val: '2', label: 'रेडियो (Radio)' },
+              { val: '3', label: 'खुर्च्या (Chairs)' },
+              { val: '4', label: 'मोबाईल फोन (Mobile Phone)' },
+              { val: '5', label: 'टेलिव्हिजन / टीव्ही (Television)' },
+              { val: '6', label: 'रेफ्रिजरेटर / फ्रिज (Refrigerator)' }
             ]
           },
           family_members: {
-            name: 'कुटुंबातील सदस्य', desc: 'एकत्र राहणारे अवलंबून असलेले सदस्य (लहान ग्रामीण कुटुंबांना जास्त गुण मिळतात)',
+            name: 'कुटुंबातील सदस्य (Family Members)', desc: 'एकत्र राहणारे अवलंबून असलेले सदस्य (लहान ग्रामीण कुटुंबांना जास्त गुण मिळतात)',
             opts: [
-              { val: '2', label: '5 सदस्यांपर्यंत' },
-              { val: '1', label: '5 पेक्षा जास्त सदस्य' }
+              { val: '2', label: '5 सदस्यांपर्यंत (Up to 5 members)' },
+              { val: '1', label: '5 पेक्षा जास्त सदस्य (> 5 members)' }
             ]
           }
         }
@@ -1277,86 +1277,86 @@
           occupation: {
             name: 'পেশা (Occupation)', desc: 'পরিবারের প্রধানের মূল পেশা',
             opts: [
-              { val: '0', label: 'কিছুই না' },
+              { val: '0', label: 'কিছুই না (None)' },
               { val: '1', label: 'শ্রমিক (Labourer)' },
-              { val: '2', label: 'জাতিগত পেশা' },
+              { val: '2', label: 'জাতিগত পেশা (Caste Occupation)' },
               { val: '3', label: 'ব্যবসা (Business)' },
-              { val: '4', label: 'স্বাধীন পেশা' },
+              { val: '4', label: 'স্বাধীন পেশা (Independent Profession)' },
               { val: '5', label: 'কৃষিকাজ (Cultivation)' },
               { val: '6', label: 'চাকরি / সেবা (Service)' }
             ]
           },
           social_participation: {
-            name: 'সামাজিক অংশগ্রহণ', desc: 'গ্রামীণ বা নাগরিক সংগঠনে সম্পৃক্ততা',
+            name: 'সামাজিক অংশগ্রহণ (Social Participation)', desc: 'গ্রামীণ বা নাগরিক সংগঠনে সম্পৃক্ততা',
             opts: [
-              { val: '0', label: 'কিছুই না' },
-              { val: '1', label: 'একটি সংগঠনের সদস্য' },
-              { val: '2', label: 'একাধিক সংগঠনের সদস্য' },
-              { val: '3', label: 'কোনো সংগঠনের পদাধিকারী' },
-              { val: '4', label: 'ব্যাপক জননেতা' }
+              { val: '0', label: 'কিছুই না (None)' },
+              { val: '1', label: 'একটি সংগঠনের সদস্য (Member of one organisation)' },
+              { val: '2', label: 'একাধিক সংগঠনের সদস্য (Member of more than one organisation)' },
+              { val: '3', label: 'কোনো সংগঠনের পদাধিকারী (Office holder in such an organisation)' },
+              { val: '4', label: 'ব্যাপক জননেতা (Wide public leader)' }
             ]
           },
           house: {
-            name: 'বাসগৃহের ধরন', desc: 'বাসস্থানের ভৌত কাঠামো',
+            name: 'বাসগৃহের ধরন (House Type)', desc: 'বাসস্থানের ভৌত কাঠামো',
             opts: [
-              { val: '0', label: 'কোনো ঘর নেই' },
+              { val: '0', label: 'কোনো ঘর নেই (No House)' },
               { val: '1', label: 'কুঁড়েঘর (Hut)' },
-              { val: '2', label: 'কাঁচা বাড়ি' },
-              { val: '3', label: 'মিশ্র বাড়ি' },
-              { val: '4', label: 'পাকা বাড়ি' },
+              { val: '2', label: 'কাঁচা বাড়ি (Kutcha House)' },
+              { val: '3', label: 'মিশ্র বাড়ি (Mixed House)' },
+              { val: '4', label: 'পাকা বাড়ি (Pucca House)' },
               { val: '5', label: 'অট্টালিকা (Mansion)' }
             ]
           },
           farm_power: {
             name: 'কৃষি শক্তি (Farm Power)', desc: 'মালিকানাধীন ভারবাহী পশু (বলদ ইত্যাদি)',
             opts: [
-              { val: '1', label: 'কোনো ভারবাহী পশু নেই' },
-              { val: '2', label: '১-২টি ভারবাহী পশু' },
-              { val: '4', label: '৩-৪টি ভারবাহী পশু' },
-              { val: '6', label: '৫-৬টি ভারবাহী পশু' }
+              { val: '1', label: 'কোনো ভারবাহী পশু নেই (No draft animals)' },
+              { val: '2', label: '১-২টি ভারবাহী পশু (1-2 draft animals)' },
+              { val: '4', label: '৩-৪টি ভারবাহী পশু (3-4 draft animals)' },
+              { val: '6', label: '৫-৬টি ভারবাহী পশু (5-6 draft animals)' }
             ]
           },
           education: {
             name: 'শিক্ষা (Education)', desc: 'পরিবারের প্রধানের সর্বোচ্চ শিক্ষাগত যোগ্যতা',
             opts: [
               { val: '0', label: 'নিরক্ষর (Illiterate)' },
-              { val: '1', label: 'শুধুমাত্র পড়তে পারেন' },
-              { val: '2', label: 'পড়তে ও লিখতে পারেন' },
+              { val: '1', label: 'শুধুমাত্র পড়তে পারেন (Can read only)' },
+              { val: '2', label: 'পড়তে ও লিখতে পারেন (Can read and write)' },
               { val: '3', label: 'প্রাথমিক (Primary)' },
               { val: '4', label: 'মাধ্যমিক বিদ্যালয় (Middle School)' },
               { val: '5', label: 'উচ্চ বিদ্যালয় (High School)' },
-              { val: '6', label: 'স্নাতক ও তদূর্ধ্ব' }
+              { val: '6', label: 'স্নাতক ও তদূর্ধ্ব (Graduate and Above)' }
             ]
           },
           land: {
-            name: 'জমির মালিকানা', desc: 'কৃষিজমির পরিমাণ (একরে)',
+            name: 'জমির মালিকানা (Land Holding)', desc: 'কৃষিজমির পরিমাণ (একরে)',
             opts: [
-              { val: '0', label: 'কোনো জমি নেই' },
-              { val: '1', label: '< ১ একর' },
-              { val: '2', label: '১ - ৫ একর' },
-              { val: '3', label: '৫ - ১০ একর' },
-              { val: '4', label: '১০ - ১৫ একর' },
-              { val: '5', label: '১৫ - ২০ একর' },
-              { val: '6', label: '> ২০ একর' }
+              { val: '0', label: 'কোনো জমি নেই (No land)' },
+              { val: '1', label: '< ১ একর (< 1 acre)' },
+              { val: '2', label: '১ - ৫ একর (1 - 5 acres)' },
+              { val: '3', label: '৫ - ১০ একর (5 - 10 acres)' },
+              { val: '4', label: '১০ - ১৫ একর (10 - 15 acres)' },
+              { val: '5', label: '১৫ - ২০ একর (15 - 20 acres)' },
+              { val: '6', label: '> ২০ একর (> 20 acres)' }
             ]
           },
           material: {
-            name: 'বস্তুগত সম্পদ', desc: 'ভোগ্যপণ্য / পরিবহন সম্পদের ক্রম',
+            name: 'বস্তুগত সম্পদ (Material Possessions)', desc: 'ভোগ্যপণ্য / পরিবহন সম্পদের ক্রম',
             opts: [
-              { val: '0', label: 'গরুর গাড়ি' },
-              { val: '1', label: 'সাইকেল' },
-              { val: '2', label: 'রেডিও' },
-              { val: '3', label: 'চেয়ার' },
-              { val: '4', label: 'মোবাইল ফোন' },
-              { val: '5', label: 'টেলিভিশন (টিভি)' },
-              { val: '6', label: 'রেফ্রিজারেটর (ফ্রিজ)' }
+              { val: '0', label: 'গরুর গাড়ি (Bullock cart)' },
+              { val: '1', label: 'সাইকেল (Bicycle)' },
+              { val: '2', label: 'রেডিও (Radio)' },
+              { val: '3', label: 'চেয়ার (Chairs)' },
+              { val: '4', label: 'মোবাইল ফোন (Mobile Phone)' },
+              { val: '5', label: 'টেলিভিশন / টিভি (Television)' },
+              { val: '6', label: 'রেফ্রিজারেটর / ফ্রিজ (Refrigerator)' }
             ]
           },
           family_members: {
-            name: 'পরিবারের সদস্য সংখ্যা', desc: 'একত্রে বসবাসকারী নির্ভরশীল সদস্য (ছোট গ্রামীণ পরিবার বেশি স্কোর পায়)',
+            name: 'পরিবারের সদস্য সংখ্যা (Family Members)', desc: 'একত্রে বসবাসকারী নির্ভরশীল সদস্য (ছোট গ্রামীণ পরিবার বেশি স্কোর পায়)',
             opts: [
-              { val: '2', label: '৫ জন সদস্য পর্যন্ত' },
-              { val: '1', label: '৫ জনের বেশি সদস্য' }
+              { val: '2', label: '৫ জন সদস্য পর্যন্ত (Up to 5 members)' },
+              { val: '1', label: '৫ জনের বেশি সদস্য (> 5 members)' }
             ]
           }
         }
@@ -1607,10 +1607,10 @@
       breakdown.forEach(item => {
         const ptUnit = item.score === 1 ? t.ui.pt : t.ui.pts;
         const row = document.createElement('div');
-        row.className = 'flex justify-between items-center py-0.5 border-b border-slate-100 last:border-b-0 text-[11px]';
+        row.className = 'flex justify-between items-start gap-2 py-1 border-b border-slate-100 last:border-b-0 text-[11px] leading-snug';
         row.innerHTML = `
-          <span class="text-slate-600 truncate max-w-[210px]"><span class="font-medium text-slate-800">${item.dimName}:</span> ${item.choice}</span>
-          <span class="font-bold text-slate-900 bg-slate-100 px-1.5 py-0.2 rounded text-[10px]">${item.score} ${ptUnit}</span>
+          <span class="text-slate-600 flex-1 break-words"><span class="font-medium text-slate-800">${item.dimName}:</span> ${item.choice}</span>
+          <span class="font-bold text-slate-900 bg-slate-100 px-1.5 py-0.5 rounded text-[10px] shrink-0 whitespace-nowrap">${item.score} ${ptUnit}</span>
         `;
         breakdownContainer.appendChild(row);
       });
