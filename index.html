@@ -63,44 +63,56 @@
 
   <!-- Header Banner -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-40 backdrop-blur-md bg-white/95">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-      <div class="flex items-start gap-3">
-        <div class="p-2.5 bg-primary-50 text-primary-700 rounded-xl ring-1 ring-primary-100 hidden sm:flex items-center justify-center">
-          <i class="fa-solid fa-wheat-awn text-xl"></i>
-        </div>
-        <div>
-          <div class="flex flex-wrap items-center gap-2 mb-1">
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-              <i class="fa-solid fa-calendar-check mr-1 text-[10px]"></i> 2021 Update
-            </span>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-100 text-amber-800 border border-amber-200">
-              Rural Community Scale
-            </span>
-            <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" 
-      <!-- Quick Action Buttons & Language Selector -->
-      <div class="flex flex-wrap items-center gap-2 self-start md:self-auto no-print">
-        <!-- Language Switcher -->
-        <div class="relative inline-flex items-center bg-slate-100 border border-slate-300 rounded-lg px-2 py-1 shadow-sm">
-          <i class="fa-solid fa-language text-primary-600 text-sm mr-1.5"></i>
-          <label for="langSelect" class="sr-only">Language</label>
-          <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-1">
-            <option value="en">English</option>
-            <option value="hi">हिन्दी (Hindi)</option>
-            <option value="ta">தமிழ் (Tamil)</option>
-            <option value="mr">मराठी (Marathi)</option>
-            <option value="bn">বাংলা (Bengali)</option>
-          </select>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-start gap-3.5">
+      <div class="p-3 bg-primary-50 text-primary-700 rounded-xl ring-1 ring-primary-100 hidden sm:flex items-center justify-center mt-0.5 shrink-0">
+        <i class="fa-solid fa-wheat-awn text-2xl"></i>
+      </div>
+      
+      <div class="flex-1 min-w-0">
+        <!-- Top Badges Row: 2021 Update, Rural Community Scale, and DOI Link -->
+        <div class="flex flex-wrap items-center gap-2 mb-1">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <i class="fa-solid fa-calendar-check mr-1 text-[10px]"></i> <span id="badge_update">2021 Update</span>
+          </span>
+          <span id="badge_rural" class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-100 text-amber-800 border border-amber-200">
+            Rural Community Scale
+          </span>
+          <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" 
+             class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-primary-50 text-primary-700 border border-primary-200 hover:bg-primary-100 transition">
+            <i class="fa-solid fa-link mr-1 text-[10px]"></i> DOI: 10.5281/zenodo.24131761
+          </a>
         </div>
 
-        <button onclick="resetCalculator()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-rotate-left text-slate-500"></i> <span id="btn_reset">Reset Form</span>
-        </button>
-        <button onclick="window.print()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-print text-slate-500"></i> <span id="btn_print">Print Report</span>
-        </button>
-        <a href="#howToCite" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-quote-left"></i> <span id="btn_citations">Citations</span>
-        </a>
+        <!-- Full-Width Unwrapped Title -->
+        <h1 id="main_title" class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight leading-snug lg:whitespace-nowrap">
+          Udai Pareek Socioeconomic Status Scale Calculator
+        </h1>
+
+        <!-- Clean Horizontal Row of Action Buttons Below Title -->
+        <div class="flex flex-wrap items-center gap-2 mt-2.5 no-print">
+          <!-- Language Switcher -->
+          <div class="relative inline-flex items-center bg-slate-100 border border-slate-300 rounded-lg px-2 py-1 shadow-sm">
+            <i class="fa-solid fa-language text-primary-600 text-sm mr-1.5"></i>
+            <label for="langSelect" class="sr-only">Language</label>
+            <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-1">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी (Hindi)</option>
+              <option value="ta">தமிழ் (Tamil)</option>
+              <option value="mr">मराठी (Marathi)</option>
+              <option value="bn">বাংলা (Bengali)</option>
+            </select>
+          </div>
+
+          <button onclick="resetCalculator()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
+            <i class="fa-solid fa-rotate-left text-slate-500"></i> <span id="btn_reset">Reset Form</span>
+          </button>
+          <button onclick="window.print()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
+            <i class="fa-solid fa-print text-slate-500"></i> <span id="btn_print">Print Report</span>
+          </button>
+          <a href="#howToCite" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition shadow-sm active:scale-95">
+            <i class="fa-solid fa-quote-left"></i> <span id="btn_citations">Citations</span>
+          </a>
+        </div>
       </div>
     </div>
   </header>
@@ -622,6 +634,9 @@
     const TRANSLATIONS = {
       en: {
         ui: {
+          main_title: 'Udai Pareek Socioeconomic Status Scale Calculator',
+          badge_update: '2021 Update',
+          badge_rural: 'Rural Community Scale',
           btn_reset: 'Reset Form',
           btn_print: 'Print Report',
           btn_citations: 'Citations',
@@ -765,6 +780,9 @@
 
       hi: {
         ui: {
+          main_title: 'उदय पारीक सामाजिक-आर्थिक स्थिति (SES) पैमाना गणक',
+          badge_update: '2021 संशोधन',
+          badge_rural: 'ग्रामीण समुदाय पैमाना',
           btn_reset: 'रीसेट करें',
           btn_print: 'रिपोर्ट प्रिंट करें',
           btn_citations: 'उद्धरण (Citations)',
@@ -908,6 +926,9 @@
 
       ta: {
         ui: {
+          main_title: 'உதய் பரீக் சமூக-பொருளாதார நிலை (SES) அளவுகோல் கணிப்பான்',
+          badge_update: '2021 புதுப்பிப்பு',
+          badge_rural: 'கிராமப்புற சமூக அளவுகோல்',
           btn_reset: 'மீட்டமை',
           btn_print: 'அறிக்கையை அச்சிடு',
           btn_citations: 'மேற்கோள்கள்',
@@ -1051,6 +1072,9 @@
 
       mr: {
         ui: {
+          main_title: 'उदय पारीक सामाजिक-आर्थिक स्थिती (SES) मोजमाप गणक',
+          badge_update: '२०२१ सुधारणा',
+          badge_rural: 'ग्रामीण समुदाय मोजमाप',
           btn_reset: 'रीसेट करा',
           btn_print: 'अहवाल प्रिंट करा',
           btn_citations: 'संदर्भ (Citations)',
@@ -1194,6 +1218,9 @@
 
       bn: {
         ui: {
+          main_title: 'উদয় পারীক আর্থ-সামাজিক অবস্থা (SES) স্কেল ক্যালকুলেটর',
+          badge_update: '২০২১ সংস্করণ',
+          badge_rural: 'গ্রামীণ সমাজ স্কেল',
           btn_reset: 'রিসেট করুন',
           btn_print: 'রিপোর্ট প্রিন্ট করুন',
           btn_citations: 'উদ্ধৃতি (Citations)',
@@ -1349,6 +1376,9 @@
       const t = TRANSLATIONS[lang];
 
       // Update static UI labels in the calculator & reference matrix
+      document.getElementById('main_title').textContent = t.ui.main_title;
+      document.getElementById('badge_update').textContent = t.ui.badge_update;
+      document.getElementById('badge_rural').textContent = t.ui.badge_rural;
       document.getElementById('btn_reset').textContent = t.ui.btn_reset;
       document.getElementById('btn_print').textContent = t.ui.btn_print;
       document.getElementById('btn_citations').textContent = t.ui.btn_citations;
