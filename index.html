@@ -7,10 +7,10 @@
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts Inter -->
+  <!-- Google Fonts Inter + Indic Scripts (Devanagari, Tamil, Bengali) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- FontAwesome for Academic / Action Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -19,7 +19,7 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
+            sans: ['Inter', '"Noto Sans Devanagari"', '"Noto Sans Tamil"', '"Noto Sans Bengali"', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -52,9 +52,6 @@
     }
     .transition-all-200 { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
   </style>
-<!-- Privacy-friendly analytics by GoatCounter -->
-<script data-goatcounter="https://udai-pareek-ses.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased selection:bg-primary-100 selection:text-primary-800">
 
@@ -80,29 +77,29 @@
               Rural Community Scale
             </span>
             <a href="https://doi.org/10.5281/zenodo.24131761" target="_blank" rel="noopener noreferrer" 
-               class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-indigo-50 text-primary-700 border border-indigo-200 hover:bg-indigo-100 transition-colors">
-              <i class="fa-solid fa-fingerprint mr-1"></i> DOI: 10.5281/zenodo.24131761
-            </a>
-          </div>
-          <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
-            Udai Pareek Socioeconomic Status (SES) Scale Calculator
-          </h1>
-          <p class="text-xs text-slate-500">
-            Standardized Rural SES Assessment based on the 2021 revision by Majumder et al.
-          </p>
+      <!-- Quick Action Buttons & Language Selector -->
+      <div class="flex flex-wrap items-center gap-2 self-start md:self-auto no-print">
+        <!-- Language Switcher -->
+        <div class="relative inline-flex items-center bg-slate-100 border border-slate-300 rounded-lg px-2 py-1 shadow-sm">
+          <i class="fa-solid fa-language text-primary-600 text-sm mr-1.5"></i>
+          <label for="langSelect" class="sr-only">Language</label>
+          <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer pr-1">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+          </select>
         </div>
-      </div>
 
-      <!-- Quick Action Buttons -->
-      <div class="flex items-center gap-2 self-start md:self-auto no-print">
         <button onclick="resetCalculator()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-rotate-left text-slate-500"></i> Reset Form
+          <i class="fa-solid fa-rotate-left text-slate-500"></i> <span id="btn_reset">Reset Form</span>
         </button>
         <button onclick="window.print()" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-print text-slate-500"></i> Print Report
+          <i class="fa-solid fa-print text-slate-500"></i> <span id="btn_print">Print Report</span>
         </button>
         <a href="#howToCite" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition shadow-sm active:scale-95">
-          <i class="fa-solid fa-quote-left"></i> Citations
+          <i class="fa-solid fa-quote-left"></i> <span id="btn_citations">Citations</span>
         </a>
       </div>
     </div>
@@ -115,13 +112,13 @@
     <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-sm">
       <div class="flex items-start gap-3">
         <div class="text-primary-600 text-lg mt-0.5"><i class="fa-solid fa-circle-info"></i></div>
-        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <div class="text-xs sm:text-sm text-slate-700 leading-relaxed" id="info_banner_text">
           <span class="font-semibold text-slate-900">Standard Rural Assessment:</span> 
           Calculates total household SES score across the 9 parameters established by Pareek &amp; Trivedi (1965) with updated norms synthesized for 2021 by Dr. Suranjan Majumder (JFM&amp;PC).
         </div>
       </div>
       <div class="text-xs bg-white/90 backdrop-blur border border-primary-200 px-3 py-1.5 rounded-lg text-primary-800 font-medium whitespace-nowrap self-stretch md:self-auto text-center">
-        Maximum Score: <strong class="text-primary-700 font-bold">47 Points</strong>
+        <span id="max_score_label">Maximum Score:</span> <strong class="text-primary-700 font-bold" id="max_score_val">47 Points</strong>
       </div>
     </div>
 
@@ -137,11 +134,11 @@
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-                  <i class="fa-solid fa-list-check text-primary-600"></i> Nine Udai Pareek SES Dimensions
+                  <i class="fa-solid fa-list-check text-primary-600"></i> <span id="form_heading">Nine Udai Pareek SES Dimensions</span>
                 </h2>
-                <p class="text-xs text-slate-500">Select the applicable tier for each criterion</p>
+                <p class="text-xs text-slate-500" id="form_subheading">Select the applicable tier for each criterion</p>
               </div>
-              <span class="text-xs font-semibold text-primary-700 bg-primary-50 border border-primary-200 px-2.5 py-0.5 rounded-md">9 Criteria</span>
+              <span id="criteria_badge" class="text-xs font-semibold text-primary-700 bg-primary-50 border border-primary-200 px-2.5 py-0.5 rounded-md">9 Criteria</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -152,19 +149,19 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="caste" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">1</span>
-                      Caste
+                      <span id="lbl_caste">Caste</span>
                     </label>
                     <span id="badge_caste" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">1 pt</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Traditional rural caste grouping</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_caste">Traditional rural caste grouping</p>
                 </div>
                 <select id="caste" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="1" data-label="Scheduled Caste">Scheduled Caste (1)</option>
-                  <option value="2" data-label="Lower Caste">Lower Caste (2)</option>
-                  <option value="3" data-label="Artisan Caste">Artisan Caste (3)</option>
-                  <option value="4" data-label="Agriculture Caste">Agriculture Caste (4)</option>
-                  <option value="5" data-label="Prestige Class">Prestige Class (5)</option>
-                  <option value="6" data-label="Dominant Class">Dominant Class (6)</option>
+                  <option value="1">Scheduled Caste (1)</option>
+                  <option value="2">Lower Caste (2)</option>
+                  <option value="3">Artisan Caste (3)</option>
+                  <option value="4">Agriculture Caste (4)</option>
+                  <option value="5">Prestige Class (5)</option>
+                  <option value="6">Dominant Class (6)</option>
                 </select>
               </div>
 
@@ -174,20 +171,20 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="occupation" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">2</span>
-                      Occupation
+                      <span id="lbl_occupation">Occupation</span>
                     </label>
                     <span id="badge_occupation" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Primary occupation of household head</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_occupation">Primary occupation of household head</p>
                 </div>
                 <select id="occupation" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="None">None (0)</option>
-                  <option value="1" data-label="Labourer">Labourer (1)</option>
-                  <option value="2" data-label="Caste Occupation">Caste Occupation (2)</option>
-                  <option value="3" data-label="Business">Business (3)</option>
-                  <option value="4" data-label="Independent Profession">Independent Profession (4)</option>
-                  <option value="5" data-label="Cultivation">Cultivation (5)</option>
-                  <option value="6" data-label="Service">Service (6)</option>
+                  <option value="0">None (0)</option>
+                  <option value="1">Labourer (1)</option>
+                  <option value="2">Caste Occupation (2)</option>
+                  <option value="3">Business (3)</option>
+                  <option value="4">Independent Profession (4)</option>
+                  <option value="5">Cultivation (5)</option>
+                  <option value="6">Service (6)</option>
                 </select>
               </div>
 
@@ -197,18 +194,18 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="social_participation" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">3</span>
-                      Social Participation
+                      <span id="lbl_social_participation">Social Participation</span>
                     </label>
                     <span id="badge_social_participation" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Involvement in civic/village bodies</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_social_participation">Involvement in civic/village bodies</p>
                 </div>
                 <select id="social_participation" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="None">None (0)</option>
-                  <option value="1" data-label="Member of 1 org">Member of one organisation (1)</option>
-                  <option value="2" data-label="Member of >1 org">Member of more than one organisation (2)</option>
-                  <option value="3" data-label="Office holder">Office holder in such an organisation (3)</option>
-                  <option value="4" data-label="Wide public leader">Wide public leader (4)</option>
+                  <option value="0">None (0)</option>
+                  <option value="1">Member of one organisation (1)</option>
+                  <option value="2">Member of more than one organisation (2)</option>
+                  <option value="3">Office holder in such an organisation (3)</option>
+                  <option value="4">Wide public leader (4)</option>
                 </select>
               </div>
 
@@ -218,19 +215,19 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="house" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">4</span>
-                      House Type
+                      <span id="lbl_house">House Type</span>
                     </label>
                     <span id="badge_house" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Physical structure of dwelling</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_house">Physical structure of dwelling</p>
                 </div>
                 <select id="house" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="No House">No House (0)</option>
-                  <option value="1" data-label="Hut">Hut (1)</option>
-                  <option value="2" data-label="Kutcha House">Kutcha House (2)</option>
-                  <option value="3" data-label="Mixed House">Mixed House (3)</option>
-                  <option value="4" data-label="Pucca House">Pucca House (4)</option>
-                  <option value="5" data-label="Mansion">Mansion (5)</option>
+                  <option value="0">No House (0)</option>
+                  <option value="1">Hut (1)</option>
+                  <option value="2">Kutcha House (2)</option>
+                  <option value="3">Mixed House (3)</option>
+                  <option value="4">Pucca House (4)</option>
+                  <option value="5">Mansion (5)</option>
                 </select>
               </div>
 
@@ -240,17 +237,17 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="farm_power" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">5</span>
-                      Farm Power
+                      <span id="lbl_farm_power">Farm Power</span>
                     </label>
                     <span id="badge_farm_power" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">1 pt</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Draft animals owned</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_farm_power">Draft animals owned</p>
                 </div>
                 <select id="farm_power" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="1" data-label="No draft animals">No draft animals (1)</option>
-                  <option value="2" data-label="1-2 draft animals">1-2 draft animals (2)</option>
-                  <option value="4" data-label="3-4 draft animals">3-4 draft animals (4)</option>
-                  <option value="6" data-label="5-6 draft animals">5-6 draft animals (6)</option>
+                  <option value="1">No draft animals (1)</option>
+                  <option value="2">1-2 draft animals (2)</option>
+                  <option value="4">3-4 draft animals (4)</option>
+                  <option value="6">5-6 draft animals (6)</option>
                 </select>
               </div>
 
@@ -260,20 +257,20 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="education" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">6</span>
-                      Education
+                      <span id="lbl_education">Education</span>
                     </label>
                     <span id="badge_education" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Highest level of household head</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_education">Highest level of household head</p>
                 </div>
                 <select id="education" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="Illiterate">Illiterate (0)</option>
-                  <option value="1" data-label="Can read only">Can read only (1)</option>
-                  <option value="2" data-label="Can read and write">Can read and write (2)</option>
-                  <option value="3" data-label="Primary">Primary (3)</option>
-                  <option value="4" data-label="Middle School">Middle School (4)</option>
-                  <option value="5" data-label="High School">High School (5)</option>
-                  <option value="6" data-label="Graduate & Above">Graduate and Above (6)</option>
+                  <option value="0">Illiterate (0)</option>
+                  <option value="1">Can read only (1)</option>
+                  <option value="2">Can read and write (2)</option>
+                  <option value="3">Primary (3)</option>
+                  <option value="4">Middle School (4)</option>
+                  <option value="5">High School (5)</option>
+                  <option value="6">Graduate and Above (6)</option>
                 </select>
               </div>
 
@@ -283,20 +280,20 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="land" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">7</span>
-                      Land Holding
+                      <span id="lbl_land">Land Holding</span>
                     </label>
                     <span id="badge_land" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Agricultural land owned (acres)</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_land">Agricultural land owned (acres)</p>
                 </div>
                 <select id="land" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="No land">No land (0)</option>
-                  <option value="1" data-label="< 1 acre">&lt; 1 acre (1)</option>
-                  <option value="2" data-label="1 - 5 acres">1 - 5 acres (2)</option>
-                  <option value="3" data-label="5 - 10 acres">5 - 10 acres (3)</option>
-                  <option value="4" data-label="10 - 15 acres">10 - 15 acres (4)</option>
-                  <option value="5" data-label="15 - 20 acres">15 - 20 acres (5)</option>
-                  <option value="6" data-label="> 20 acres">&gt; 20 acres (6)</option>
+                  <option value="0">No land (0)</option>
+                  <option value="1">&lt; 1 acre (1)</option>
+                  <option value="2">1 - 5 acres (2)</option>
+                  <option value="3">5 - 10 acres (3)</option>
+                  <option value="4">10 - 15 acres (4)</option>
+                  <option value="5">15 - 20 acres (5)</option>
+                  <option value="6">&gt; 20 acres (6)</option>
                 </select>
               </div>
 
@@ -306,20 +303,20 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="material" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">8</span>
-                      Material Possessions
+                      <span id="lbl_material">Material Possessions</span>
                     </label>
                     <span id="badge_material" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">0 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Consumer / transport asset hierarchy</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_material">Consumer / transport asset hierarchy</p>
                 </div>
                 <select id="material" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="0" data-label="Bullock cart">Bullock cart (0)</option>
-                  <option value="1" data-label="Bicycle">Bicycle (1)</option>
-                  <option value="2" data-label="Radio">Radio (2)</option>
-                  <option value="3" data-label="Chairs">Chairs (3)</option>
-                  <option value="4" data-label="Mobile Phone">Mobile Phone (4)</option>
-                  <option value="5" data-label="Television">Television (5)</option>
-                  <option value="6" data-label="Refrigerator">Refrigerator (6)</option>
+                  <option value="0">Bullock cart (0)</option>
+                  <option value="1">Bicycle (1)</option>
+                  <option value="2">Radio (2)</option>
+                  <option value="3">Chairs (3)</option>
+                  <option value="4">Mobile Phone (4)</option>
+                  <option value="5">Television (5)</option>
+                  <option value="6">Refrigerator (6)</option>
                 </select>
               </div>
 
@@ -329,15 +326,15 @@
                   <div class="flex justify-between items-center mb-1">
                     <label for="family_members" class="text-xs sm:text-sm font-semibold text-slate-800 flex items-center gap-1.5">
                       <span class="w-4 h-4 rounded-full bg-primary-100 text-primary-700 text-[10px] flex items-center justify-center font-bold">9</span>
-                      Family Members (Household Size)
+                      <span id="lbl_family_members">Family Members (Household Size)</span>
                     </label>
                     <span id="badge_family_members" class="text-xs font-bold px-2 py-0.5 rounded bg-white text-primary-700 border border-slate-200">2 pts</span>
                   </div>
-                  <p class="text-[11px] text-slate-500 mb-2">Dependent cohabiting members (Smaller rural families score higher)</p>
+                  <p class="text-[11px] text-slate-500 mb-2" id="desc_family_members">Dependent cohabiting members (Smaller rural families score higher)</p>
                 </div>
                 <select id="family_members" onchange="calculateScore()" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 bg-white px-2.5 py-2 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none">
-                  <option value="2" data-label="Up to 5 members">Up to 5 members (2)</option>
-                  <option value="1" data-label="> 5 members">&gt; 5 members (1)</option>
+                  <option value="2">Up to 5 members (2)</option>
+                  <option value="1">&gt; 5 members (1)</option>
                 </select>
               </div>
 
@@ -355,7 +352,7 @@
           <div id="resultGradient" class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-rose-500 via-amber-500 via-indigo-500 to-emerald-500"></div>
 
           <div class="flex items-center justify-between mt-1 mb-3">
-            <span class="text-[11px] uppercase font-extrabold tracking-wider text-slate-400">Computed Result</span>
+            <span id="computed_result_label" class="text-[11px] uppercase font-extrabold tracking-wider text-slate-400">Computed Result</span>
             <span id="sesClassBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide bg-rose-100 text-rose-800 border border-rose-200">
               Lower Class
             </span>
@@ -363,7 +360,7 @@
 
           <!-- Total Score Visual -->
           <div class="text-center py-3 bg-slate-50 rounded-xl border border-slate-100 mb-4">
-            <span class="text-[11px] font-semibold text-slate-500 block mb-0.5">Total SES Raw Score</span>
+            <span id="total_raw_label" class="text-[11px] font-semibold text-slate-500 block mb-0.5">Total SES Raw Score</span>
             <div class="flex items-baseline justify-center gap-1">
               <span id="totalScoreDisplay" class="text-4xl font-black text-slate-900 tracking-tight">4</span>
               <span class="text-slate-400 font-medium text-lg">/ 47</span>
@@ -374,24 +371,24 @@
           <!-- Score Progress Bar -->
           <div class="space-y-1 mb-4">
             <div class="flex justify-between text-xs font-semibold text-slate-600">
-              <span>Score Index (0 - 47)</span>
+              <span id="score_index_label">Score Index (0 - 47)</span>
               <span id="scorePercentage">8.5%</span>
             </div>
             <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
               <div id="scoreBar" class="h-full bg-rose-500 rounded-full transition-all duration-300" style="width: 8.5%"></div>
             </div>
             <div class="flex justify-between text-[10px] text-slate-400 font-medium pt-0.5">
-              <span>0 (Lower)</span>
+              <span id="bar_min_label">0 (Lower)</span>
               <span>13</span>
               <span>24</span>
               <span>33</span>
-              <span>47 (Upper)</span>
+              <span id="bar_max_label">47 (Upper)</span>
             </div>
           </div>
 
           <!-- Breakdown list -->
           <div class="space-y-1.5 mb-4">
-            <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-1">
+            <h4 id="breakdown_heading" class="text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-100 pb-1">
               Dimension Points Breakdown
             </h4>
             <div class="space-y-1 text-xs text-slate-600 max-h-48 overflow-y-auto pr-1" id="breakdownList">
@@ -402,64 +399,64 @@
           <!-- Actions: Copy & Print -->
           <div class="grid grid-cols-2 gap-2 no-print">
             <button onclick="copyResultSummary()" type="button" class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition active:scale-95">
-              <i class="fa-solid fa-copy"></i> Copy Result
+              <i class="fa-solid fa-copy"></i> <span id="btn_copy_result">Copy Result</span>
             </button>
             <button onclick="window.print()" type="button" class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition active:scale-95">
-              <i class="fa-solid fa-file-pdf"></i> Export PDF
+              <i class="fa-solid fa-file-pdf"></i> <span id="btn_export_pdf">Export PDF</span>
             </button>
           </div>
         </div>
 
-        <!-- Reference Rubric Matrix (Clean single-line 'Rule' layout) -->
+        <!-- Reference Rubric Matrix (Clean single-line 'Rule' layout - Translated) -->
         <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm">
           <h3 class="text-xs sm:text-sm font-bold text-slate-900 mb-2.5 flex items-center gap-2">
-            <i class="fa-solid fa-table-list text-primary-600"></i> Udai Pareek 2021 Reference Matrix
+            <i class="fa-solid fa-table-list text-primary-600"></i> <span id="matrix_heading">Udai Pareek 2021 Reference Matrix</span>
           </h3>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="bg-slate-100 border-b border-slate-200 text-slate-600 font-semibold uppercase tracking-wider">
-                  <th class="py-2 px-2.5 whitespace-nowrap">Class</th>
-                  <th class="py-2 px-2.5 whitespace-nowrap">Rule</th>
-                  <th class="py-2 px-2.5 whitespace-nowrap">Score</th>
-                  <th class="py-2 px-2.5 whitespace-nowrap">Classification</th>
+                  <th id="th_class" class="py-2 px-2.5 whitespace-nowrap">Class</th>
+                  <th id="th_rule" class="py-2 px-2.5 whitespace-nowrap">Rule</th>
+                  <th id="th_score" class="py-2 px-2.5 whitespace-nowrap">Score</th>
+                  <th id="th_classification" class="py-2 px-2.5 whitespace-nowrap">Classification</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100">
                 <tr id="row_upper" class="hover:bg-slate-50 transition">
-                  <td class="py-2 px-2.5 font-medium text-emerald-800 whitespace-nowrap">Class I</td>
+                  <td id="td_class_1" class="py-2 px-2.5 font-medium text-emerald-800 whitespace-nowrap">Class I</td>
                   <td class="py-2 px-2.5 font-mono text-[11px] whitespace-nowrap">&gt; 42</td>
                   <td class="py-2 px-2.5 font-semibold whitespace-nowrap">43 – 47</td>
-                  <td class="py-2 px-2.5 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[11px]">Upper Class</span></td>
+                  <td class="py-2 px-2.5 whitespace-nowrap"><span id="td_cat_1" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-[11px]">Upper Class</span></td>
                 </tr>
                 <tr id="row_upper_middle" class="hover:bg-slate-50 transition">
-                  <td class="py-2 px-2.5 font-medium text-blue-800 whitespace-nowrap">Class II</td>
+                  <td id="td_class_2" class="py-2 px-2.5 font-medium text-blue-800 whitespace-nowrap">Class II</td>
                   <td class="py-2 px-2.5 font-mono text-[11px] whitespace-nowrap">33 – 42</td>
                   <td class="py-2 px-2.5 font-semibold whitespace-nowrap">33 – 42</td>
-                  <td class="py-2 px-2.5 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-[11px]">Upper Middle Class</span></td>
+                  <td class="py-2 px-2.5 whitespace-nowrap"><span id="td_cat_2" class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-[11px]">Upper Middle Class</span></td>
                 </tr>
                 <tr id="row_middle" class="hover:bg-slate-50 transition">
-                  <td class="py-2 px-2.5 font-medium text-indigo-800 whitespace-nowrap">Class III</td>
+                  <td id="td_class_3" class="py-2 px-2.5 font-medium text-indigo-800 whitespace-nowrap">Class III</td>
                   <td class="py-2 px-2.5 font-mono text-[11px] whitespace-nowrap">24 – 32</td>
                   <td class="py-2 px-2.5 font-semibold whitespace-nowrap">24 – 32</td>
-                  <td class="py-2 px-2.5 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-semibold text-[11px]">Middle Class</span></td>
+                  <td class="py-2 px-2.5 whitespace-nowrap"><span id="td_cat_3" class="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 font-semibold text-[11px]">Middle Class</span></td>
                 </tr>
                 <tr id="row_lower_middle" class="hover:bg-slate-50 transition">
-                  <td class="py-2 px-2.5 font-medium text-amber-800 whitespace-nowrap">Class IV</td>
+                  <td id="td_class_4" class="py-2 px-2.5 font-medium text-amber-800 whitespace-nowrap">Class IV</td>
                   <td class="py-2 px-2.5 font-mono text-[11px] whitespace-nowrap">13 – 23</td>
                   <td class="py-2 px-2.5 font-semibold whitespace-nowrap">13 – 23</td>
-                  <td class="py-2 px-2.5 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[11px]">Lower Middle Class</span></td>
+                  <td class="py-2 px-2.5 whitespace-nowrap"><span id="td_cat_4" class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-[11px]">Lower Middle Class</span></td>
                 </tr>
                 <tr id="row_lower" class="hover:bg-slate-50 transition">
-                  <td class="py-2 px-2.5 font-medium text-rose-800 whitespace-nowrap">Class V</td>
+                  <td id="td_class_5" class="py-2 px-2.5 font-medium text-rose-800 whitespace-nowrap">Class V</td>
                   <td class="py-2 px-2.5 font-mono text-[11px] whitespace-nowrap">&lt; 13</td>
                   <td class="py-2 px-2.5 font-semibold whitespace-nowrap">0 – 12</td>
-                  <td class="py-2 px-2.5 whitespace-nowrap"><span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-semibold text-[11px]">Lower Class</span></td>
+                  <td class="py-2 px-2.5 whitespace-nowrap"><span id="td_cat_5" class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 font-semibold text-[11px]">Lower Class</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p class="text-[10px] text-slate-400 mt-2 italic">
+          <p id="matrix_footnote" class="text-[10px] text-slate-400 mt-2 italic">
             *Norms updated for 2021 by Dr. S. Majumder in JFM&amp;PC.
           </p>
         </div>
@@ -468,7 +465,7 @@
 
     </div>
 
-    <!-- Academic Citations Section (Arranged one below the other) -->
+    <!-- Academic Citations Section (Kept strictly in English per instructions) -->
     <section id="howToCite" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm space-y-6">
       
       <div class="border-b border-slate-200 pb-3">
@@ -620,17 +617,801 @@
 
   <!-- Core JavaScript Logic -->
   <script>
-    const DIMENSIONS = [
-      { id: 'caste', name: 'Caste' },
-      { id: 'occupation', name: 'Occupation' },
-      { id: 'social_participation', name: 'Social Participation' },
-      { id: 'house', name: 'House' },
-      { id: 'farm_power', name: 'Farm Power' },
-      { id: 'education', name: 'Education' },
-      { id: 'land', name: 'Land' },
-      { id: 'material', name: 'Material Possessions' },
-      { id: 'family_members', name: 'Family Members' }
+    let currentLang = 'en';
+
+    const TRANSLATIONS = {
+      en: {
+        ui: {
+          btn_reset: 'Reset Form',
+          btn_print: 'Print Report',
+          btn_citations: 'Citations',
+          info_banner: '<span class="font-semibold text-slate-900">Standard Rural Assessment:</span> Calculates total household SES score across the 9 parameters established by Pareek &amp; Trivedi (1965) with updated norms synthesized for 2021 by Dr. Suranjan Majumder (JFM&amp;PC).',
+          max_score_label: 'Maximum Score:',
+          max_score_val: '47 Points',
+          form_heading: 'Nine Udai Pareek SES Dimensions',
+          form_subheading: 'Select the applicable tier for each criterion',
+          criteria_badge: '9 Criteria',
+          computed_result_label: 'Computed Result',
+          total_raw_label: 'Total SES Raw Score',
+          score_index_label: 'Score Index (0 - 47)',
+          bar_min_label: '0 (Lower)',
+          bar_max_label: '47 (Upper)',
+          breakdown_heading: 'Dimension Points Breakdown',
+          btn_copy_result: 'Copy Result',
+          btn_export_pdf: 'Export PDF',
+          matrix_heading: 'Udai Pareek 2021 Reference Matrix',
+          th_class: 'Class',
+          th_rule: 'Rule',
+          th_score: 'Score',
+          th_classification: 'Classification',
+          matrix_footnote: '*Norms updated for 2021 by Dr. S. Majumder in JFM&PC.',
+          pt: 'pt',
+          pts: 'pts',
+          toast_reset: 'Calculator fields reset to default values.',
+          toast_copied: 'Assessment result copied to clipboard!',
+          toast_copy_fail: 'Failed to copy to clipboard',
+          report_title: 'UDAI PAREEK SES ASSESSMENT REPORT (2021 Update)',
+          report_date: 'Assessment Date',
+          report_score: 'Total Raw Score',
+          report_class: 'Socioeconomic Classification',
+          report_breakdown: 'Dimension Breakdown:'
+        },
+        classes: {
+          c1_num: 'Class I', c1_name: 'Upper Class', c1_full: 'Upper Class (Class I)',
+          c2_num: 'Class II', c2_name: 'Upper Middle Class', c2_full: 'Upper Middle Class (Class II)',
+          c3_num: 'Class III', c3_name: 'Middle Class', c3_full: 'Middle Class (Class III)',
+          c4_num: 'Class IV', c4_name: 'Lower Middle Class', c4_full: 'Lower Middle Class (Class IV)',
+          c5_num: 'Class V', c5_name: 'Lower Class', c5_full: 'Lower Class (Class V)'
+        },
+        dims: {
+          caste: {
+            name: 'Caste', desc: 'Traditional rural caste grouping',
+            opts: [
+              { val: '1', label: 'Scheduled Caste' },
+              { val: '2', label: 'Lower Caste' },
+              { val: '3', label: 'Artisan Caste' },
+              { val: '4', label: 'Agriculture Caste' },
+              { val: '5', label: 'Prestige Class' },
+              { val: '6', label: 'Dominant Class' }
+            ]
+          },
+          occupation: {
+            name: 'Occupation', desc: 'Primary occupation of household head',
+            opts: [
+              { val: '0', label: 'None' },
+              { val: '1', label: 'Labourer' },
+              { val: '2', label: 'Caste Occupation' },
+              { val: '3', label: 'Business' },
+              { val: '4', label: 'Independent Profession' },
+              { val: '5', label: 'Cultivation' },
+              { val: '6', label: 'Service' }
+            ]
+          },
+          social_participation: {
+            name: 'Social Participation', desc: 'Involvement in civic/village bodies',
+            opts: [
+              { val: '0', label: 'None' },
+              { val: '1', label: 'Member of one organisation' },
+              { val: '2', label: 'Member of more than one organisation' },
+              { val: '3', label: 'Office holder in such an organisation' },
+              { val: '4', label: 'Wide public leader' }
+            ]
+          },
+          house: {
+            name: 'House Type', desc: 'Physical structure of dwelling',
+            opts: [
+              { val: '0', label: 'No House' },
+              { val: '1', label: 'Hut' },
+              { val: '2', label: 'Kutcha House' },
+              { val: '3', label: 'Mixed House' },
+              { val: '4', label: 'Pucca House' },
+              { val: '5', label: 'Mansion' }
+            ]
+          },
+          farm_power: {
+            name: 'Farm Power', desc: 'Draft animals owned',
+            opts: [
+              { val: '1', label: 'No draft animals' },
+              { val: '2', label: '1-2 draft animals' },
+              { val: '4', label: '3-4 draft animals' },
+              { val: '6', label: '5-6 draft animals' }
+            ]
+          },
+          education: {
+            name: 'Education', desc: 'Highest level of household head',
+            opts: [
+              { val: '0', label: 'Illiterate' },
+              { val: '1', label: 'Can read only' },
+              { val: '2', label: 'Can read and write' },
+              { val: '3', label: 'Primary' },
+              { val: '4', label: 'Middle School' },
+              { val: '5', label: 'High School' },
+              { val: '6', label: 'Graduate and Above' }
+            ]
+          },
+          land: {
+            name: 'Land Holding', desc: 'Agricultural land owned (acres)',
+            opts: [
+              { val: '0', label: 'No land' },
+              { val: '1', label: '< 1 acre' },
+              { val: '2', label: '1 - 5 acres' },
+              { val: '3', label: '5 - 10 acres' },
+              { val: '4', label: '10 - 15 acres' },
+              { val: '5', label: '15 - 20 acres' },
+              { val: '6', label: '> 20 acres' }
+            ]
+          },
+          material: {
+            name: 'Material Possessions', desc: 'Consumer / transport asset hierarchy',
+            opts: [
+              { val: '0', label: 'Bullock cart' },
+              { val: '1', label: 'Bicycle' },
+              { val: '2', label: 'Radio' },
+              { val: '3', label: 'Chairs' },
+              { val: '4', label: 'Mobile Phone' },
+              { val: '5', label: 'Television' },
+              { val: '6', label: 'Refrigerator' }
+            ]
+          },
+          family_members: {
+            name: 'Family Members (Household Size)', desc: 'Dependent cohabiting members (Smaller rural families score higher)',
+            opts: [
+              { val: '2', label: 'Up to 5 members' },
+              { val: '1', label: '> 5 members' }
+            ]
+          }
+        }
+      },
+
+      hi: {
+        ui: {
+          btn_reset: 'रीसेट करें',
+          btn_print: 'रिपोर्ट प्रिंट करें',
+          btn_citations: 'उद्धरण (Citations)',
+          info_banner: '<span class="font-semibold text-slate-900">मानक ग्रामीण मूल्यांकन:</span> डॉ. सुरंजन मजूमदार (JFM&amp;PC) द्वारा 2021 के लिए संशोधित मानदंडों के साथ पारीक और त्रिवेदी (1965) के 9 मापदंडों पर कुल पारिवारिक सामाजिक-आर्थिक स्थिति (SES) स्कोर की गणना करता है।',
+          max_score_label: 'अधिकतम स्कोर:',
+          max_score_val: '47 अंक',
+          form_heading: 'उदय पारीक SES के नौ आयाम',
+          form_subheading: 'प्रत्येक मानदंड के लिए उपयुक्त श्रेणी चुनें',
+          criteria_badge: '9 मानदंड',
+          computed_result_label: 'गणना परिणाम',
+          total_raw_label: 'कुल SES स्कोर',
+          score_index_label: 'स्कोर सूचकांक (0 - 47)',
+          bar_min_label: '0 (निम्न)',
+          bar_max_label: '47 (उच्च)',
+          breakdown_heading: 'आयामवार अंक विवरण',
+          btn_copy_result: 'परिणाम कॉपी करें',
+          btn_export_pdf: 'PDF निर्यात करें',
+          matrix_heading: 'उदय पारीक 2021 संदर्भ तालिका',
+          th_class: 'वर्ग',
+          th_rule: 'नियम',
+          th_score: 'स्कोर',
+          th_classification: 'वर्गीकरण',
+          matrix_footnote: '*डॉ. एस. मजूमदार (JFM&PC) द्वारा 2021 के लिए संशोधित मानदंड।',
+          pt: 'अंक',
+          pts: 'अंक',
+          toast_reset: 'कैलकुलेटर फ़ील्ड डिफ़ॉल्ट मानों पर रीसेट हो गए हैं।',
+          toast_copied: 'मूल्यांकन परिणाम क्लिपबोर्ड पर कॉपी हो गया!',
+          toast_copy_fail: 'क्लिपबोर्ड पर कॉपी करने में विफल',
+          report_title: 'उदय पारीक सामाजिक-आर्थिक स्थिति (SES) मूल्यांकन रिपोर्ट (2021 संशोधन)',
+          report_date: 'मूल्यांकन तिथि',
+          report_score: 'कुल स्कोर',
+          report_class: 'सामाजिक-आर्थिक वर्गीकरण',
+          report_breakdown: 'आयाम विवरण:'
+        },
+        classes: {
+          c1_num: 'वर्ग I', c1_name: 'उच्च वर्ग', c1_full: 'उच्च वर्ग (वर्ग I)',
+          c2_num: 'वर्ग II', c2_name: 'उच्च मध्यम वर्ग', c2_full: 'उच्च मध्यम वर्ग (वर्ग II)',
+          c3_num: 'वर्ग III', c3_name: 'मध्यम वर्ग', c3_full: 'मध्यम वर्ग (वर्ग III)',
+          c4_num: 'वर्ग IV', c4_name: 'निम्न मध्यम वर्ग', c4_full: 'निम्न मध्यम वर्ग (वर्ग IV)',
+          c5_num: 'वर्ग V', c5_name: 'निम्न वर्ग', c5_full: 'निम्न वर्ग (वर्ग V)'
+        },
+        dims: {
+          caste: {
+            name: 'जाति (Caste)', desc: 'पारंपरिक ग्रामीण जाति समूह',
+            opts: [
+              { val: '1', label: 'अनुसूचित जाति (Scheduled Caste)' },
+              { val: '2', label: 'निम्न जाति (Lower Caste)' },
+              { val: '3', label: 'कारीगर जाति (Artisan Caste)' },
+              { val: '4', label: 'कृषक जाति (Agriculture Caste)' },
+              { val: '5', label: 'प्रतिष्ठित वर्ग (Prestige Class)' },
+              { val: '6', label: 'प्रमुख वर्ग (Dominant Class)' }
+            ]
+          },
+          occupation: {
+            name: 'व्यवसाय (Occupation)', desc: 'परिवार के मुखिया का मुख्य व्यवसाय',
+            opts: [
+              { val: '0', label: 'कोई नहीं' },
+              { val: '1', label: 'मजदूर (Labourer)' },
+              { val: '2', label: 'जातिगत व्यवसाय' },
+              { val: '3', label: 'व्यापार (Business)' },
+              { val: '4', label: 'स्वतंत्र पेशा' },
+              { val: '5', label: 'खेती (Cultivation)' },
+              { val: '6', label: 'नौकरी / सेवा (Service)' }
+            ]
+          },
+          social_participation: {
+            name: 'सामाजिक सहभागिता', desc: 'ग्राम या नागरिक संस्थाओं में भागीदारी',
+            opts: [
+              { val: '0', label: 'कोई नहीं' },
+              { val: '1', label: 'एक संगठन का सदस्य' },
+              { val: '2', label: 'एक से अधिक संगठनों का सदस्य' },
+              { val: '3', label: 'किसी संगठन में पदाधिकारी' },
+              { val: '4', label: 'व्यापक सार्वजनिक नेता' }
+            ]
+          },
+          house: {
+            name: 'मकान का प्रकार', desc: 'निवास स्थान की भौतिक संरचना',
+            opts: [
+              { val: '0', label: 'मकान नहीं' },
+              { val: '1', label: 'झोपड़ी (Hut)' },
+              { val: '2', label: 'कच्चा मकान' },
+              { val: '3', label: 'मिश्रित मकान' },
+              { val: '4', label: 'पक्का मकान' },
+              { val: '5', label: 'हवेली / कोठी (Mansion)' }
+            ]
+          },
+          farm_power: {
+            name: 'कृषि शक्ति (Farm Power)', desc: 'स्वामित्व वाले भारवाही पशु (बैल आदि)',
+            opts: [
+              { val: '1', label: 'कोई भारवाही पशु नहीं' },
+              { val: '2', label: '1-2 भारवाही पशु' },
+              { val: '4', label: '3-4 भारवाही पशु' },
+              { val: '6', label: '5-6 भारवाही पशु' }
+            ]
+          },
+          education: {
+            name: 'शिक्षा (Education)', desc: 'परिवार के मुखिया की उच्चतम शिक्षा',
+            opts: [
+              { val: '0', label: 'निरक्षर (Illiterate)' },
+              { val: '1', label: 'केवल पढ़ सकते हैं' },
+              { val: '2', label: 'पढ़ और लिख सकते हैं' },
+              { val: '3', label: 'प्राथमिक (Primary)' },
+              { val: '4', label: 'मिडिल स्कूल (8वीं तक)' },
+              { val: '5', label: 'हाई स्कूल (10वीं / 12वीं)' },
+              { val: '6', label: 'स्नातक और उससे ऊपर' }
+            ]
+          },
+          land: {
+            name: 'भूमि स्वामित्व', desc: 'कृषि भूमि का स्वामित्व (एकड़ में)',
+            opts: [
+              { val: '0', label: 'कोई भूमि नहीं' },
+              { val: '1', label: '< 1 एकड़' },
+              { val: '2', label: '1 - 5 एकड़' },
+              { val: '3', label: '5 - 10 एकड़' },
+              { val: '4', label: '10 - 15 एकड़' },
+              { val: '5', label: '15 - 20 एकड़' },
+              { val: '6', label: '> 20 एकड़' }
+            ]
+          },
+          material: {
+            name: 'भौतिक संपत्ति', desc: 'उपभोक्ता / परिवहन संपत्ति श्रेणी',
+            opts: [
+              { val: '0', label: 'बैलगाड़ी' },
+              { val: '1', label: 'साइकिल' },
+              { val: '2', label: 'रेडियो' },
+              { val: '3', label: 'कुर्सियां' },
+              { val: '4', label: 'मोबाइल फोन' },
+              { val: '5', label: 'टेलीविजन' },
+              { val: '6', label: 'रेफ्रिजरेटर (फ्रिज)' }
+            ]
+          },
+          family_members: {
+            name: 'परिवार के सदस्य', desc: 'साथ रहने वाले आश्रित सदस्य (छोटे ग्रामीण परिवारों को अधिक अंक मिलते हैं)',
+            opts: [
+              { val: '2', label: '5 सदस्यों तक' },
+              { val: '1', label: '5 से अधिक सदस्य' }
+            ]
+          }
+        }
+      },
+
+      ta: {
+        ui: {
+          btn_reset: 'மீட்டமை',
+          btn_print: 'அறிக்கையை அச்சிடு',
+          btn_citations: 'மேற்கோள்கள்',
+          info_banner: '<span class="font-semibold text-slate-900">நிலையான கிராமப்புற மதிப்பீடு:</span> டாக்டர் சுரஞ்சன் மஜும்தார் (JFM&amp;PC) 2021-ஆம் ஆண்டிற்காகப் புதுப்பித்த விதிமுறைகளுடன், பரீக் &amp; திரிவேதி (1965) நிறுவிய 9 அளவுகோல்களின் அடிப்படையில் குடும்பத்தின் சமூக-பொருளாதார நிலை (SES) மதிப்பெண்ணைக் கணக்கிடுகிறது.',
+          max_score_label: 'அதிகபட்ச மதிப்பெண்:',
+          max_score_val: '47 புள்ளிகள்',
+          form_heading: 'உதய் பரீக் SES அளவுகோலின் 9 பரிமாணங்கள்',
+          form_subheading: 'ஒவ்வொரு அளவுகோலுக்கும் பொருத்தமான நிலையைத் தேர்ந்தெடுக்கவும்',
+          criteria_badge: '9 அளவுகோல்கள்',
+          computed_result_label: 'கணக்கிடப்பட்ட முடிவு',
+          total_raw_label: 'மொத்த SES மதிப்பெண்',
+          score_index_label: 'மதிப்பெண் குறியீடு (0 - 47)',
+          bar_min_label: '0 (குறைந்த)',
+          bar_max_label: '47 (உயர்)',
+          breakdown_heading: 'பரிமாண வாரியான மதிப்பெண் விவரம்',
+          btn_copy_result: 'முடிவை நகலெடு',
+          btn_export_pdf: 'PDF ஏற்றுமதி',
+          matrix_heading: 'உதய் பரீக் 2021 குறிப்பு அட்டவணை',
+          th_class: 'வகுப்பு',
+          th_rule: 'விதி',
+          th_score: 'மதிப்பெண்',
+          th_classification: 'வகைப்பாடு',
+          matrix_footnote: '*டாக்டர் எஸ். மஜும்தார் (JFM&PC) அவர்களால் 2021-க்கு புதுப்பிக்கப்பட்ட விதிகள்.',
+          pt: 'புள்ளி',
+          pts: 'புள்ளிகள்',
+          toast_reset: 'கணிப்பான் புலங்கள் இயல்புநிலை மதிப்புகளுக்கு மீட்டமைக்கப்பட்டன.',
+          toast_copied: 'மதிப்பீட்டு முடிவு நகலெடுக்கப்பட்டது!',
+          toast_copy_fail: 'நகலெடுப்பதில் தோல்வி',
+          report_title: 'உதய் பரீக் சமூக-பொருளாதார நிலை (SES) மதிப்பீட்டு அறிக்கை (2021 புதுப்பிப்பு)',
+          report_date: 'மதிப்பீட்டு தேதி',
+          report_score: 'மொத்த மதிப்பெண்',
+          report_class: 'சமூக-பொருளாதார வகைப்பாடு',
+          report_breakdown: 'பரிமாண விவரம்:'
+        },
+        classes: {
+          c1_num: 'வகுப்பு I', c1_name: 'உயர் வகுப்பு', c1_full: 'உயர் வகுப்பு (வகுப்பு I)',
+          c2_num: 'வகுப்பு II', c2_name: 'உயர் நடுத்தர வகுப்பு', c2_full: 'உயர் நடுத்தர வகுப்பு (வகுப்பு II)',
+          c3_num: 'வகுப்பு III', c3_name: 'நடுத்தர வகுப்பு', c3_full: 'நடுத்தர வகுப்பு (வகுப்பு III)',
+          c4_num: 'வகுப்பு IV', c4_name: 'கீழ் நடுத்தர வகுப்பு', c4_full: 'கீழ் நடுத்தர வகுப்பு (வகுப்பு IV)',
+          c5_num: 'வகுப்பு V', c5_name: 'கீழ் வகுப்பு', c5_full: 'கீழ் வகுப்பு (வகுப்பு V)'
+        },
+        dims: {
+          caste: {
+            name: 'சாதி (Caste)', desc: 'பாரம்பரிய கிராமப்புற சாதிப் பிரிவு',
+            opts: [
+              { val: '1', label: 'பட்டியல் சாதி (Scheduled Caste)' },
+              { val: '2', label: 'கீழ் சாதி (Lower Caste)' },
+              { val: '3', label: 'கைவினைஞர் சாதி (Artisan Caste)' },
+              { val: '4', label: 'வேளாண் சாதி (Agriculture Caste)' },
+              { val: '5', label: 'கௌரவ வகுப்பு (Prestige Class)' },
+              { val: '6', label: 'ஆதிக்க வகுப்பு (Dominant Class)' }
+            ]
+          },
+          occupation: {
+            name: 'தொழில் (Occupation)', desc: 'குடும்பத் தலைவரின் முதன்மைத் தொழில்',
+            opts: [
+              { val: '0', label: 'ஏதுமில்லை' },
+              { val: '1', label: 'கூலித் தொழிலாளி' },
+              { val: '2', label: 'குலத் தொழில்' },
+              { val: '3', label: 'வணிகம் / வியாபாரம்' },
+              { val: '4', label: 'சுயதொழில் / நிபுணர்' },
+              { val: '5', label: 'விவசாயம் (Cultivation)' },
+              { val: '6', label: 'அரசு / தனியார் பணி (Service)' }
+            ]
+          },
+          social_participation: {
+            name: 'சமூகப் பங்கேற்பு', desc: 'கிராம அல்லது பொது அமைப்புகளில் பங்கேற்பு',
+            opts: [
+              { val: '0', label: 'ஏதுமில்லை' },
+              { val: '1', label: 'ஒரு அமைப்பில் உறுப்பினர்' },
+              { val: '2', label: 'ஒன்றுக்கு மேற்பட்ட அமைப்புகளில் உறுப்பினர்' },
+              { val: '3', label: 'அமைப்பில் நிர்வாகப் பொறுப்பாளர்' },
+              { val: '4', label: 'பரந்த பொதுத் தலைவர்' }
+            ]
+          },
+          house: {
+            name: 'வீட்டின் வகை', desc: 'வசிப்பிடத்தின் கட்டுமான அமைப்பு',
+            opts: [
+              { val: '0', label: 'வீடு இல்லை' },
+              { val: '1', label: 'குடிசை (Hut)' },
+              { val: '2', label: 'மண் வீடு (Kutcha House)' },
+              { val: '3', label: 'கலப்பு வீடு (Mixed House)' },
+              { val: '4', label: 'காரை வீடு (Pucca House)' },
+              { val: '5', label: 'மாளிகை (Mansion)' }
+            ]
+          },
+          farm_power: {
+            name: 'பண்ணை ஆற்றல்', desc: 'உழவு / இழுவை கால்நடைகள்',
+            opts: [
+              { val: '1', label: 'இழுவை விலங்குகள் இல்லை' },
+              { val: '2', label: '1-2 இழுவை விலங்குகள்' },
+              { val: '4', label: '3-4 இழுவை விலங்குகள்' },
+              { val: '6', label: '5-6 இழுவை விலங்குகள்' }
+            ]
+          },
+          education: {
+            name: 'கல்வி (Education)', desc: 'குடும்பத் தலைவரின் உயர்ந்த கல்வித் தகுதி',
+            opts: [
+              { val: '0', label: 'எழுத்தறிவற்றவர்' },
+              { val: '1', label: 'படிக்க மட்டும் தெரியும்' },
+              { val: '2', label: 'படிக்கவும் எழுதவும் தெரியும்' },
+              { val: '3', label: 'ஆரம்பக் கல்வி (Primary)' },
+              { val: '4', label: 'நடுநிலைப் பள்ளி' },
+              { val: '5', label: 'உயர்நிலைப் பள்ளி' },
+              { val: '6', label: 'பட்டதாரி மற்றும் அதற்கு மேல்' }
+            ]
+          },
+          land: {
+            name: 'நில உடைமை', desc: 'விவசாய நிலம் (ஏக்கரில்)',
+            opts: [
+              { val: '0', label: 'நிலம் இல்லை' },
+              { val: '1', label: '< 1 ஏக்கர்' },
+              { val: '2', label: '1 - 5 ஏக்கர்' },
+              { val: '3', label: '5 - 10 ஏக்கர்' },
+              { val: '4', label: '10 - 15 ஏக்கர்' },
+              { val: '5', label: '15 - 20 ஏக்கர்' },
+              { val: '6', label: '> 20 ஏக்கர்' }
+            ]
+          },
+          material: {
+            name: 'பொருள் உடைமைகள்', desc: 'வீட்டு உபயோக / போக்குவரத்து பொருட்கள்',
+            opts: [
+              { val: '0', label: 'மாட்டு வண்டி' },
+              { val: '1', label: 'மிதிவண்டி (சைக்கிள்)' },
+              { val: '2', label: 'வானொலி (ரேடியோ)' },
+              { val: '3', label: 'நாற்காலிகள்' },
+              { val: '4', label: 'கைபேசி (மொபைல் போன்)' },
+              { val: '5', label: 'தொலைக்காட்சி (டிவி)' },
+              { val: '6', label: 'குளிர்பதனப் பெட்டி (ஃபிரிட்ஜ்)' }
+            ]
+          },
+          family_members: {
+            name: 'குடும்ப உறுப்பினர்கள்', desc: 'உடன் வசிக்கும் உறுப்பினர்கள் (சிறிய கிராமப்புற குடும்பங்களுக்கு அதிக மதிப்பெண்)',
+            opts: [
+              { val: '2', label: '5 உறுப்பினர்கள் வரை' },
+              { val: '1', label: '5 உறுப்பினர்களுக்கு மேல்' }
+            ]
+          }
+        }
+      },
+
+      mr: {
+        ui: {
+          btn_reset: 'रीसेट करा',
+          btn_print: 'अहवाल प्रिंट करा',
+          btn_citations: 'संदर्भ (Citations)',
+          info_banner: '<span class="font-semibold text-slate-900">मानक ग्रामीण मूल्यांकन:</span> डॉ. सुरंजन मजुमदार (JFM&amp;PC) यांनी २०२१ साठी अद्ययावत केलेल्या निकषांसह पारीक आणि त्रिवेदी (१९६५) यांच्या ९ मापदंडांवर एकूण कौटुंबिक सामाजिक-आर्थिक स्थिती (SES) गुणांची गणना करते.',
+          max_score_label: 'कमाल गुण:',
+          max_score_val: '47 गुण',
+          form_heading: 'उदय पारीक SES मोजमापाचे नऊ आयाम',
+          form_subheading: 'प्रत्येक निकषासाठी योग्य स्तर निवडा',
+          criteria_badge: '9 निकष',
+          computed_result_label: 'गणना निकाल',
+          total_raw_label: 'एकूण SES गुण',
+          score_index_label: 'गुण निर्देशांक (0 - 47)',
+          bar_min_label: '0 (कनिष्ठ)',
+          bar_max_label: '47 (उच्च)',
+          breakdown_heading: 'आयामनिहाय गुण तपशील',
+          btn_copy_result: 'निकाल कॉपी करा',
+          btn_export_pdf: 'PDF निर्यात करा',
+          matrix_heading: 'उदय पारीक २०२१ संदर्भ तक्ता',
+          th_class: 'वर्ग',
+          th_rule: 'नियम',
+          th_score: 'गुण',
+          th_classification: 'वर्गीकरण',
+          matrix_footnote: '*डॉ. एस. मजुमदार (JFM&PC) यांनी २०२१ साठी अद्ययावत केलेले निकष.',
+          pt: 'गुण',
+          pts: 'गुण',
+          toast_reset: 'कॅल्क्युलेटर रकाने मूळ मूल्यांवर रीसेट केले आहेत.',
+          toast_copied: 'मूल्यांकन निकाल क्लिपबोर्डवर कॉपी झाला!',
+          toast_copy_fail: 'क्लिपबोर्डवर कॉपी करण्यात अयशस्वी',
+          report_title: 'उदय पारीक सामाजिक-आर्थिक स्थिती (SES) मूल्यांकन अहवाल (२०२१ सुधारणा)',
+          report_date: 'मूल्यांकन तारीख',
+          report_score: 'एकूण गुण',
+          report_class: 'सामाजिक-आर्थिक वर्गीकरण',
+          report_breakdown: 'आयाम तपशील:'
+        },
+        classes: {
+          c1_num: 'वर्ग I', c1_name: 'उच्च वर्ग', c1_full: 'उच्च वर्ग (वर्ग I)',
+          c2_num: 'वर्ग II', c2_name: 'उच्च मध्यम वर्ग', c2_full: 'उच्च मध्यम वर्ग (वर्ग II)',
+          c3_num: 'वर्ग III', c3_name: 'मध्यम वर्ग', c3_full: 'मध्यम वर्ग (वर्ग III)',
+          c4_num: 'वर्ग IV', c4_name: 'कनिष्ठ मध्यम वर्ग', c4_full: 'कनिष्ठ मध्यम वर्ग (वर्ग IV)',
+          c5_num: 'वर्ग V', c5_name: 'कनिष्ठ वर्ग', c5_full: 'कनिष्ठ वर्ग (वर्ग V)'
+        },
+        dims: {
+          caste: {
+            name: 'जात (Caste)', desc: 'पारंपारिक ग्रामीण जात गट',
+            opts: [
+              { val: '1', label: 'अनुसूचित जाती (Scheduled Caste)' },
+              { val: '2', label: 'कनिष्ठ जात (Lower Caste)' },
+              { val: '3', label: 'कारागीर जात (Artisan Caste)' },
+              { val: '4', label: 'कृषी जात (Agriculture Caste)' },
+              { val: '5', label: 'प्रतिष्ठित वर्ग (Prestige Class)' },
+              { val: '6', label: 'प्रबळ वर्ग (Dominant Class)' }
+            ]
+          },
+          occupation: {
+            name: 'व्यवसाय (Occupation)', desc: 'कुटुंब प्रमुखाचा मुख्य व्यवसाय',
+            opts: [
+              { val: '0', label: 'काहीही नाही' },
+              { val: '1', label: 'मजूर (Labourer)' },
+              { val: '2', label: 'पारंपारिक / जातीय व्यवसाय' },
+              { val: '3', label: 'व्यापार (Business)' },
+              { val: '4', label: 'स्वतंत्र व्यवसाय' },
+              { val: '5', label: 'शेती (Cultivation)' },
+              { val: '6', label: 'नोकरी / सेवा (Service)' }
+            ]
+          },
+          social_participation: {
+            name: 'सामाजिक सहभाग', desc: 'ग्राम किंवा नागरी संस्थांमधील सहभाग',
+            opts: [
+              { val: '0', label: 'काहीही नाही' },
+              { val: '1', label: 'एका संस्थेचा सदस्य' },
+              { val: '2', label: 'एकापेक्षा जास्त संस्थांचा सदस्य' },
+              { val: '3', label: 'अशा संस्थेत पदाधिकारी' },
+              { val: '4', label: 'व्यापक सार्वजनिक नेता' }
+            ]
+          },
+          house: {
+            name: 'घराचा प्रकार', desc: 'निवासस्थानाची भौतिक रचना',
+            opts: [
+              { val: '0', label: 'घर नाही' },
+              { val: '1', label: 'झोपडी (Hut)' },
+              { val: '2', label: 'कच्चे घर' },
+              { val: '3', label: 'मिश्र घर' },
+              { val: '4', label: 'पक्के घर' },
+              { val: '5', label: 'वाडा / बंगला (Mansion)' }
+            ]
+          },
+          farm_power: {
+            name: 'शेती शक्ती (Farm Power)', desc: 'मालकीचे ओढकाम करणारे पशुधन (बैल इ.)',
+            opts: [
+              { val: '1', label: 'ओढकाम करणारे प्राणी नाहीत' },
+              { val: '2', label: '1-2 ओढकाम करणारे प्राणी' },
+              { val: '4', label: '3-4 ओढकाम करणारे प्राणी' },
+              { val: '6', label: '5-6 ओढकाम करणारे प्राणी' }
+            ]
+          },
+          education: {
+            name: 'शिक्षण (Education)', desc: 'कुटुंब प्रमुखाचे सर्वोच्च शिक्षण',
+            opts: [
+              { val: '0', label: 'निरक्षर (Illiterate)' },
+              { val: '1', label: 'फक्त वाचता येते' },
+              { val: '2', label: 'वाचता आणि लिहिता येते' },
+              { val: '3', label: 'प्राथमिक (Primary)' },
+              { val: '4', label: 'माध्यमिक शाळा (Middle School)' },
+              { val: '5', label: 'हायस्कूल (High School)' },
+              { val: '6', label: 'पदवीधर आणि त्यापुढील' }
+            ]
+          },
+          land: {
+            name: 'जमीन मालकी', desc: 'शेतजमीन मालकी (एकरमध्ये)',
+            opts: [
+              { val: '0', label: 'जमीन नाही' },
+              { val: '1', label: '< 1 एकर' },
+              { val: '2', label: '1 - 5 एकर' },
+              { val: '3', label: '5 - 10 एकर' },
+              { val: '4', label: '10 - 15 एकर' },
+              { val: '5', label: '15 - 20 एकर' },
+              { val: '6', label: '> 20 एकर' }
+            ]
+          },
+          material: {
+            name: 'भौतिक मालमत्ता', desc: 'ग्राहकोपयोगी / वाहतूक साधने',
+            opts: [
+              { val: '0', label: 'बैलगाडी' },
+              { val: '1', label: 'सायकल' },
+              { val: '2', label: 'रेडिओ' },
+              { val: '3', label: 'खुर्च्या' },
+              { val: '4', label: 'मोबाईल फोन' },
+              { val: '5', label: 'टेलिव्हिजन (टीव्ही)' },
+              { val: '6', label: 'रेफ्रिजरेटर (फ्रिज)' }
+            ]
+          },
+          family_members: {
+            name: 'कुटुंबातील सदस्य', desc: 'एकत्र राहणारे अवलंबून असलेले सदस्य (लहान ग्रामीण कुटुंबांना जास्त गुण मिळतात)',
+            opts: [
+              { val: '2', label: '5 सदस्यांपर्यंत' },
+              { val: '1', label: '5 पेक्षा जास्त सदस्य' }
+            ]
+          }
+        }
+      },
+
+      bn: {
+        ui: {
+          btn_reset: 'রিসেট করুন',
+          btn_print: 'রিপোর্ট প্রিন্ট করুন',
+          btn_citations: 'উদ্ধৃতি (Citations)',
+          info_banner: '<span class="font-semibold text-slate-900">আদর্শ গ্রামীণ মূল্যায়ন:</span> ড. সুরঞ্জন মজুমদার (JFM&amp;PC) কর্তৃক ২০২১ সালের জন্য সংশোধিত মানদণ্ডসহ পারীক ও ত্রিবেদী (১৯৬৫)-এর ৯টি মাপকাঠির ভিত্তিতে পরিবারের মোট আর্থ-সামাজিক অবস্থা (SES) স্কোর গণনা করে।',
+          max_score_label: 'সর্বোচ্চ স্কোর:',
+          max_score_val: '৪৭ পয়েন্ট',
+          form_heading: 'উদয় পারীক SES স্কেলের ৯টি মাত্রা',
+          form_subheading: 'প্রতিটি মাপকাঠির জন্য প্রযোজ্য স্তর নির্বাচন করুন',
+          criteria_badge: '৯টি মাপকাঠি',
+          computed_result_label: 'গণনাকৃত ফলাফল',
+          total_raw_label: 'মোট SES স্কোর',
+          score_index_label: 'স্কোর সূচক (০ - ৪৭)',
+          bar_min_label: '০ (নিম্ন)',
+          bar_max_label: '৪৭ (উচ্চ)',
+          breakdown_heading: 'মাত্রাভিত্তিক পয়েন্ট বিবরণ',
+          btn_copy_result: 'ফলাফল কপি করুন',
+          btn_export_pdf: 'PDF রপ্তানি করুন',
+          matrix_heading: 'উদয় পারীক ২০২১ রেফারেন্স তালিকা',
+          th_class: 'শ্রেণি',
+          th_rule: 'নিয়ম',
+          th_score: 'স্কোর',
+          th_classification: 'শ্রেণিবিভাগ',
+          matrix_footnote: '*ড. এস. মজুমদার (JFM&PC) কর্তৃক ২০২১ সালের জন্য সংশোধিত মানদণ্ড।',
+          pt: 'পয়েন্ট',
+          pts: 'পয়েন্ট',
+          toast_reset: 'ক্যালকুলেটর ঘরগুলো ডিফল্ট মানে রিসেট করা হয়েছে।',
+          toast_copied: 'মূল্যায়নের ফলাফল ক্লিপবোর্ডে কপি করা হয়েছে!',
+          toast_copy_fail: 'ক্লিপবোর্ডে কপি করতে ব্যর্থ হয়েছে',
+          report_title: 'উদয় পারীক আর্থ-সামাজিক অবস্থা (SES) মূল্যায়ন রিপোর্ট (২০২১ সংস্করণ)',
+          report_date: 'মূল্যায়নের তারিখ',
+          report_score: 'মোট স্কোর',
+          report_class: 'আর্থ-সামাজিক শ্রেণিবিভাগ',
+          report_breakdown: 'মাত্রা বিবরণ:'
+        },
+        classes: {
+          c1_num: 'শ্রেণি I', c1_name: 'উচ্চবিত্ত শ্রেণি', c1_full: 'উচ্চবিত্ত শ্রেণি (শ্রেণি I)',
+          c2_num: 'শ্রেণি II', c2_name: 'উচ্চ-মধ্যবিত্ত শ্রেণি', c2_full: 'উচ্চ-মধ্যবিত্ত শ্রেণি (শ্রেণি II)',
+          c3_num: 'শ্রেণি III', c3_name: 'মধ্যবিত্ত শ্রেণি', c3_full: 'মধ্যবিত্ত শ্রেণি (শ্রেণি III)',
+          c4_num: 'শ্রেণি IV', c4_name: 'নিম্ন-মধ্যবিত্ত শ্রেণি', c4_full: 'নিম্ন-মধ্যবিত্ত শ্রেণি (শ্রেণি IV)',
+          c5_num: 'শ্রেণি V', c5_name: 'নিম্নবিত্ত শ্রেণি', c5_full: 'নিম্নবিত্ত শ্রেণি (শ্রেণি V)'
+        },
+        dims: {
+          caste: {
+            name: 'জাতি / বর্ণ (Caste)', desc: 'ঐতিহ্যবাহী গ্রামীণ জাতিগত শ্রেণিবিন্যাস',
+            opts: [
+              { val: '1', label: 'তফসিলি জাতি (Scheduled Caste)' },
+              { val: '2', label: 'নিম্ন বর্ণ (Lower Caste)' },
+              { val: '3', label: 'কারিগর জাতি (Artisan Caste)' },
+              { val: '4', label: 'কৃষিজীবী জাতি (Agriculture Caste)' },
+              { val: '5', label: 'মর্যাদাসম্পন্ন শ্রেণি (Prestige Class)' },
+              { val: '6', label: 'প্রভাবশালী শ্রেণি (Dominant Class)' }
+            ]
+          },
+          occupation: {
+            name: 'পেশা (Occupation)', desc: 'পরিবারের প্রধানের মূল পেশা',
+            opts: [
+              { val: '0', label: 'কিছুই না' },
+              { val: '1', label: 'শ্রমিক (Labourer)' },
+              { val: '2', label: 'জাতিগত পেশা' },
+              { val: '3', label: 'ব্যবসা (Business)' },
+              { val: '4', label: 'স্বাধীন পেশা' },
+              { val: '5', label: 'কৃষিকাজ (Cultivation)' },
+              { val: '6', label: 'চাকরি / সেবা (Service)' }
+            ]
+          },
+          social_participation: {
+            name: 'সামাজিক অংশগ্রহণ', desc: 'গ্রামীণ বা নাগরিক সংগঠনে সম্পৃক্ততা',
+            opts: [
+              { val: '0', label: 'কিছুই না' },
+              { val: '1', label: 'একটি সংগঠনের সদস্য' },
+              { val: '2', label: 'একাধিক সংগঠনের সদস্য' },
+              { val: '3', label: 'কোনো সংগঠনের পদাধিকারী' },
+              { val: '4', label: 'ব্যাপক জননেতা' }
+            ]
+          },
+          house: {
+            name: 'বাসগৃহের ধরন', desc: 'বাসস্থানের ভৌত কাঠামো',
+            opts: [
+              { val: '0', label: 'কোনো ঘর নেই' },
+              { val: '1', label: 'কুঁড়েঘর (Hut)' },
+              { val: '2', label: 'কাঁচা বাড়ি' },
+              { val: '3', label: 'মিশ্র বাড়ি' },
+              { val: '4', label: 'পাকা বাড়ি' },
+              { val: '5', label: 'অট্টালিকা (Mansion)' }
+            ]
+          },
+          farm_power: {
+            name: 'কৃষি শক্তি (Farm Power)', desc: 'মালিকানাধীন ভারবাহী পশু (বলদ ইত্যাদি)',
+            opts: [
+              { val: '1', label: 'কোনো ভারবাহী পশু নেই' },
+              { val: '2', label: '১-২টি ভারবাহী পশু' },
+              { val: '4', label: '৩-৪টি ভারবাহী পশু' },
+              { val: '6', label: '৫-৬টি ভারবাহী পশু' }
+            ]
+          },
+          education: {
+            name: 'শিক্ষা (Education)', desc: 'পরিবারের প্রধানের সর্বোচ্চ শিক্ষাগত যোগ্যতা',
+            opts: [
+              { val: '0', label: 'নিরক্ষর (Illiterate)' },
+              { val: '1', label: 'শুধুমাত্র পড়তে পারেন' },
+              { val: '2', label: 'পড়তে ও লিখতে পারেন' },
+              { val: '3', label: 'প্রাথমিক (Primary)' },
+              { val: '4', label: 'মাধ্যমিক বিদ্যালয় (Middle School)' },
+              { val: '5', label: 'উচ্চ বিদ্যালয় (High School)' },
+              { val: '6', label: 'স্নাতক ও তদূর্ধ্ব' }
+            ]
+          },
+          land: {
+            name: 'জমির মালিকানা', desc: 'কৃষিজমির পরিমাণ (একরে)',
+            opts: [
+              { val: '0', label: 'কোনো জমি নেই' },
+              { val: '1', label: '< ১ একর' },
+              { val: '2', label: '১ - ৫ একর' },
+              { val: '3', label: '৫ - ১০ একর' },
+              { val: '4', label: '১০ - ১৫ একর' },
+              { val: '5', label: '১৫ - ২০ একর' },
+              { val: '6', label: '> ২০ একর' }
+            ]
+          },
+          material: {
+            name: 'বস্তুগত সম্পদ', desc: 'ভোগ্যপণ্য / পরিবহন সম্পদের ক্রম',
+            opts: [
+              { val: '0', label: 'গরুর গাড়ি' },
+              { val: '1', label: 'সাইকেল' },
+              { val: '2', label: 'রেডিও' },
+              { val: '3', label: 'চেয়ার' },
+              { val: '4', label: 'মোবাইল ফোন' },
+              { val: '5', label: 'টেলিভিশন (টিভি)' },
+              { val: '6', label: 'রেফ্রিজারেটর (ফ্রিজ)' }
+            ]
+          },
+          family_members: {
+            name: 'পরিবারের সদস্য সংখ্যা', desc: 'একত্রে বসবাসকারী নির্ভরশীল সদস্য (ছোট গ্রামীণ পরিবার বেশি স্কোর পায়)',
+            opts: [
+              { val: '2', label: '৫ জন সদস্য পর্যন্ত' },
+              { val: '1', label: '৫ জনের বেশি সদস্য' }
+            ]
+          }
+        }
+      }
+    };
+
+    const DIMENSION_IDS = [
+      'caste', 'occupation', 'social_participation', 'house',
+      'farm_power', 'education', 'land', 'material', 'family_members'
     ];
+
+    function changeLanguage(lang) {
+      if (!TRANSLATIONS[lang]) return;
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      const t = TRANSLATIONS[lang];
+
+      // Update static UI labels in the calculator & reference matrix
+      document.getElementById('btn_reset').textContent = t.ui.btn_reset;
+      document.getElementById('btn_print').textContent = t.ui.btn_print;
+      document.getElementById('btn_citations').textContent = t.ui.btn_citations;
+      document.getElementById('info_banner_text').innerHTML = t.ui.info_banner;
+      document.getElementById('max_score_label').textContent = t.ui.max_score_label;
+      document.getElementById('max_score_val').textContent = t.ui.max_score_val;
+      document.getElementById('form_heading').textContent = t.ui.form_heading;
+      document.getElementById('form_subheading').textContent = t.ui.form_subheading;
+      document.getElementById('criteria_badge').textContent = t.ui.criteria_badge;
+      document.getElementById('computed_result_label').textContent = t.ui.computed_result_label;
+      document.getElementById('total_raw_label').textContent = t.ui.total_raw_label;
+      document.getElementById('score_index_label').textContent = t.ui.score_index_label;
+      document.getElementById('bar_min_label').textContent = t.ui.bar_min_label;
+      document.getElementById('bar_max_label').textContent = t.ui.bar_max_label;
+      document.getElementById('breakdown_heading').textContent = t.ui.breakdown_heading;
+      document.getElementById('btn_copy_result').textContent = t.ui.btn_copy_result;
+      document.getElementById('btn_export_pdf').textContent = t.ui.btn_export_pdf;
+
+      // Update Reference Matrix Table
+      document.getElementById('matrix_heading').textContent = t.ui.matrix_heading;
+      document.getElementById('th_class').textContent = t.ui.th_class;
+      document.getElementById('th_rule').textContent = t.ui.th_rule;
+      document.getElementById('th_score').textContent = t.ui.th_score;
+      document.getElementById('th_classification').textContent = t.ui.th_classification;
+      document.getElementById('matrix_footnote').textContent = t.ui.matrix_footnote;
+
+      document.getElementById('td_class_1').textContent = t.classes.c1_num;
+      document.getElementById('td_cat_1').textContent = t.classes.c1_name;
+      document.getElementById('td_class_2').textContent = t.classes.c2_num;
+      document.getElementById('td_cat_2').textContent = t.classes.c2_name;
+      document.getElementById('td_class_3').textContent = t.classes.c3_num;
+      document.getElementById('td_cat_3').textContent = t.classes.c3_name;
+      document.getElementById('td_class_4').textContent = t.classes.c4_num;
+      document.getElementById('td_cat_4').textContent = t.classes.c4_name;
+      document.getElementById('td_class_5').textContent = t.classes.c5_num;
+      document.getElementById('td_cat_5').textContent = t.classes.c5_name;
+
+      // Update all 9 dimension labels, descriptions, and dropdown options while preserving selected index
+      DIMENSION_IDS.forEach(dimId => {
+        const dimData = t.dims[dimId];
+        document.getElementById('lbl_' + dimId).textContent = dimData.name;
+        document.getElementById('desc_' + dimId).textContent = dimData.desc;
+
+        const selectEl = document.getElementById(dimId);
+        const prevIndex = selectEl.selectedIndex;
+
+        selectEl.innerHTML = '';
+        dimData.opts.forEach(opt => {
+          const optionEl = document.createElement('option');
+          optionEl.value = opt.val;
+          optionEl.setAttribute('data-label', opt.label);
+          optionEl.textContent = `${opt.label} (${opt.val})`;
+          selectEl.appendChild(optionEl);
+        });
+
+        if (prevIndex >= 0 && prevIndex < selectEl.options.length) {
+          selectEl.selectedIndex = prevIndex;
+        }
+      });
+
+      // Recompute score and refresh breakdown & badges in selected language
+      calculateScore();
+    }
 
     function showToast(message, isSuccess = true) {
       const toast = document.getElementById('toast');
@@ -654,6 +1435,7 @@
     }
 
     function copyText(str, successMessage) {
+      const t = TRANSLATIONS[currentLang].ui;
       const el = document.createElement('textarea');
       el.value = str;
       el.setAttribute('readonly', '');
@@ -665,7 +1447,7 @@
         document.execCommand('copy');
         showToast(successMessage);
       } catch (err) {
-        showToast('Failed to copy to clipboard', false);
+        showToast(t.toast_copy_fail, false);
       }
       document.body.removeChild(el);
     }
@@ -716,24 +1498,26 @@
     }
 
     function calculateScore() {
+      const t = TRANSLATIONS[currentLang];
       let total = 0;
       const breakdown = [];
 
-      DIMENSIONS.forEach(dim => {
-        const select = document.getElementById(dim.id);
+      DIMENSION_IDS.forEach(dimId => {
+        const select = document.getElementById(dimId);
         const score = parseInt(select.value, 10) || 0;
         total += score;
 
         const selectedOption = select.options[select.selectedIndex];
         const labelText = selectedOption.getAttribute('data-label') || selectedOption.text;
+        const dimName = t.dims[dimId].name;
 
-        const badge = document.getElementById('badge_' + dim.id);
+        const badge = document.getElementById('badge_' + dimId);
         if (badge) {
-          badge.textContent = score + (score === 1 ? ' pt' : ' pts');
+          badge.textContent = score + ' ' + (score === 1 ? t.ui.pt : t.ui.pts);
         }
 
         breakdown.push({
-          dimName: dim.name,
+          dimName: dimName,
           choice: labelText,
           score: score
         });
@@ -754,27 +1538,27 @@
       let activeRowId = '';
 
       if (total > 42) {
-        classification = 'Upper Class (Class I)';
+        classification = t.classes.c1_full;
         badgeClass = 'bg-emerald-100 text-emerald-800 border-emerald-300';
         barClass = 'bg-emerald-500';
         activeRowId = 'row_upper';
       } else if (total >= 33) {
-        classification = 'Upper Middle Class (Class II)';
+        classification = t.classes.c2_full;
         badgeClass = 'bg-blue-100 text-blue-800 border-blue-300';
         barClass = 'bg-blue-600';
         activeRowId = 'row_upper_middle';
       } else if (total >= 24) {
-        classification = 'Middle Class (Class III)';
+        classification = t.classes.c3_full;
         badgeClass = 'bg-indigo-100 text-indigo-800 border-indigo-300';
         barClass = 'bg-indigo-600';
         activeRowId = 'row_middle';
       } else if (total >= 13) {
-        classification = 'Lower Middle Class (Class IV)';
+        classification = t.classes.c4_full;
         badgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
         barClass = 'bg-amber-500';
         activeRowId = 'row_lower_middle';
       } else {
-        classification = 'Lower Class (Class V)';
+        classification = t.classes.c5_full;
         badgeClass = 'bg-rose-100 text-rose-800 border-rose-300';
         barClass = 'bg-rose-500';
         activeRowId = 'row_lower';
@@ -791,11 +1575,12 @@
       const breakdownContainer = document.getElementById('breakdownList');
       breakdownContainer.innerHTML = '';
       breakdown.forEach(item => {
+        const ptUnit = item.score === 1 ? t.ui.pt : t.ui.pts;
         const row = document.createElement('div');
         row.className = 'flex justify-between items-center py-0.5 border-b border-slate-100 last:border-b-0 text-[11px]';
         row.innerHTML = `
           <span class="text-slate-600 truncate max-w-[210px]"><span class="font-medium text-slate-800">${item.dimName}:</span> ${item.choice}</span>
-          <span class="font-bold text-slate-900 bg-slate-100 px-1.5 py-0.2 rounded text-[10px]">${item.score} pt${item.score !== 1 ? 's' : ''}</span>
+          <span class="font-bold text-slate-900 bg-slate-100 px-1.5 py-0.2 rounded text-[10px]">${item.score} ${ptUnit}</span>
         `;
         breakdownContainer.appendChild(row);
       });
@@ -814,28 +1599,31 @@
     function resetCalculator() {
       document.getElementById('sesForm').reset();
       calculateScore();
-      showToast('Calculator fields reset to default values.');
+      showToast(TRANSLATIONS[currentLang].ui.toast_reset);
     }
 
     function copyResultSummary() {
+      const t = TRANSLATIONS[currentLang];
       const totalScore = document.getElementById('totalScoreDisplay').textContent;
       const sesClass = document.getElementById('sesClassTitle').textContent;
       const timestamp = new Date().toLocaleDateString();
 
-      let summary = `UDAI PAREEK SES ASSESSMENT REPORT (2021 Update)
+      let summary = `${t.ui.report_title}
 --------------------------------------------------
-Assessment Date: ${timestamp}
-Total Raw Score: ${totalScore} / 47
-Socioeconomic Classification: ${sesClass}
+${t.ui.report_date}: ${timestamp}
+${t.ui.report_score}: ${totalScore} / 47
+${t.ui.report_class}: ${sesClass}
 --------------------------------------------------
-Dimension Breakdown:
+${t.ui.report_breakdown}
 `;
 
-      DIMENSIONS.forEach(dim => {
-        const select = document.getElementById(dim.id);
-        const score = select.value;
+      DIMENSION_IDS.forEach(dimId => {
+        const select = document.getElementById(dimId);
+        const score = parseInt(select.value, 10) || 0;
+        const ptUnit = score === 1 ? t.ui.pt : t.ui.pts;
         const opt = select.options[select.selectedIndex];
-        summary += `- ${dim.name}: ${opt.text} (${score} pts)\n`;
+        const label = opt.getAttribute('data-label') || opt.text;
+        summary += `- ${t.dims[dimId].name}: ${label} (${score} ${ptUnit})\n`;
       });
 
       summary += `--------------------------------------------------
@@ -844,11 +1632,11 @@ Creator: Rachael Alphonso (Zenodo: https://doi.org/10.5281/zenodo.24131761)
 License: MIT License
 Scale Reference: Majumder S. J Family Med Prim Care 2021;10(11):3964-7. DOI: 10.4103/jfmpc.jfmpc_600_21`;
 
-      copyText(summary, 'Assessment result copied to clipboard!');
+      copyText(summary, t.ui.toast_copied);
     }
 
     window.onload = function () {
-      calculateScore();
+      changeLanguage('en');
     };
   </script>
 </body>
